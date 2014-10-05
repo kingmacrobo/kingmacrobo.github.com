@@ -4,13 +4,102 @@
  <title>Hombo's Blog</title>
  <link href="http://hombo.wang/" rel="self"/>
  <link href="http://hombo.wang"/>
- <updated>2014-10-05T21:24:50+08:00</updated>
+ <updated>2014-10-05T22:24:33+08:00</updated>
  <id>http://hombo.wang</id>
  <author>
    <name>Hombo Wang</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>swap两个int指针指向的数</title>
+   <link href="http://hombo.wang/algorithm/2014/10/05/swap-two-int"/>
+   <updated>2014-10-05T00:00:00+08:00</updated>
+   <id>http://hombo.wang/algorithm/2014/10/05/swap-two-int</id>
+   <content type="html">&lt;p&gt;这是一道最近的面试题，感谢斌哥的奉献！
+题目是： 填写下面的函数，实现a和b指针指向的两个数的交换。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;void swap(int *a , int *b){
+    *a = ________ ;
+    *b = ________ ;
+    *a = ________ ;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;分析:&lt;/h2&gt;
+
+&lt;p&gt;我们知道对于两个数a,b的交换，如果不借助其他变量，也是可以实现的，方法有下面几种：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;用加减法:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;利用加减法的 &lt;code&gt;交换律&lt;/code&gt; 和 &lt;code&gt;结合律&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;void swap(int a , int b){
+    a = a + b;
+    b = a - b; //b = a + b - b = a 
+    a = a - b; //a = a + b - a = b
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;用乘除法:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;注意，这个方法需要满足 &lt;code&gt;a*b != 0&lt;/code&gt; &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;void swap(int a , int b){
+    a = a * b;
+    b = a / b; //b = a * b / b = a 
+    a = a / b; //a = a * b / a = b
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;其实这个方法用到了乘除法的 &lt;code&gt;分配率&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;用异或运算：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;利用异或的性质: &lt;code&gt;交换律&lt;/code&gt; , &lt;code&gt;结合律&lt;/code&gt;  , &lt;code&gt;a ^ a = 0&lt;/code&gt; , &lt;code&gt;0 ^ a = a&lt;/code&gt; &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;void swap(int a , int b){
+    a = a ^ b;
+    b = a ^ b; //b = a ^ b ^ b = a ^ 0 = a 
+    a = a ^ b; //a = a ^ b ^ a = a ^ a ^ b = 0 ^ b = b
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;而本题给的是指针，而且等式左边都是指针，也就是说没办法直接改变指针指向的内存位置的值，那怎么办呢？&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;解决方法:&lt;/h2&gt;
+
+&lt;p&gt;虽然等式左边没有给出&lt;a href=&quot;http://baike.baidu.com/view/836474.htm?fr=aladdin&quot;&gt;左值&lt;/a&gt;,但我们可以在等式右边加入左值，也就是说可以写成这种形式：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;*a = *a + *b
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;为了不改变指针的值，还需要用点小技巧，就是用“,”来分割语句，可以写成下面这种形式：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;a = (*a = *a + *b , a )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这是因为用“,”分割的语句，语句的返回值是最后一个子语句，这里就是a。现在应该明白了吧！那本题的一种解法如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;void swap(int *a , int *b){
+    a = (*a = *a + *b , a);
+    b = (*b = *a - *b , b); //*b = *a + *b - *b = *a 
+    a = (*a = *a - *b , a); //*a = *a + *b - *a = *b
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;也可以用乘除法和异或运算来实现，大同小异，这里不再给出。&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Leetcode TwoSum</title>

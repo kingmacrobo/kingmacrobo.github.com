@@ -10,4 +10,5 @@ http://hombo.wang/search.html
 http://hombo.wang/sitemap.txt
 http://hombo.wang/tags.html
 
+http://hombo.wang/algorithm/2014/10/05/swap-two-int
 http://hombo.wang/leetcode/2014/10/05/Two-Sum
