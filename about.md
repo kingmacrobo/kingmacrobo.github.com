@@ -4,7 +4,9 @@ title: About Me
 header: About Me
 group: navigation
 ---
- * **Name:** Yitao Yao
- * **Email:** [simpleyyt@gmail.com](mailto:simpleyyt@gmail.com)
- * **WeiBo:** [摇一摇SimpleLife](http://www.weibo.com/u/1836017133)
- * **Github:** [Simpleyyt](https://github.com/Simpleyyt)
+ * **Name:** Hombo Wang
+ * **Email:** [wanghongbo@ict.ac.cn](mailto:wanghongbo@ict.ac.cn)
+ * **LinkIn:** [Hongbo Wang](cn.linkedin.com/pub/hongbo-wang/70/4b0/921/)
+ * **Github:** [kingmacrobo](https://github.com/kingmacrobo)
+ * **CSDN:** [kingmacrobo](http://blog.csdn.net/u013101828)
+ * **WeiBo:** [MBKG](http://www.weibo.com/mbkg)
