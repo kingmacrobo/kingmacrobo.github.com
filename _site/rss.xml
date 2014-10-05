@@ -5,8 +5,8 @@
         <description>Hombo's Blog - Hombo Wang</description>
         <link>http://hombo.wang</link>
         <link>http://hombo.wang</link>
-        <lastBuildDate>2014-10-05T20:49:24+08:00</lastBuildDate>
-        <pubDate>2014-10-05T20:49:24+08:00</pubDate>
+        <lastBuildDate>2014-10-05T20:54:11+08:00</lastBuildDate>
+        <pubDate>2014-10-05T20:54:11+08:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -60,7 +60,7 @@ public:
 
 ##hash表解法:##
 
-这种解法很简单，就是建立 &amp;lt;numbers[i],i&amp;gt; 这一对索引，遍历一遍numbers， 然后用target-numbers[i] 去找hash 表 ，如果存在 ，取出i，搞定！
+这种解法很简单，就是建立 &amp;lt;numbers[i],i&amp;gt; 这一对索引，遍历一遍numbers， 然后用target-numbers[i] 去找hash 表 ，如果存在 ，取出i，搞定!
 
 时间复杂度是O(n), 空间复杂度是hash表的大小。
 
@@ -81,6 +81,7 @@ vector&lt;int&gt; twoSum(vector&lt;int&gt; &amp;amp;numbers, int target){
     }
     return result;
 }
+
 
 &lt;/int&gt;&lt;/int&gt;&lt;/int&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/int&gt;&lt;/int&gt;&lt;/int&gt;&lt;/code&gt;&lt;/pre&gt;
 </description>
