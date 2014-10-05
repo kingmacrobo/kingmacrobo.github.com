@@ -5,8 +5,8 @@
         <description>Hombo's Blog - Hombo Wang</description>
         <link>http://hombo.wang</link>
         <link>http://hombo.wang</link>
-        <lastBuildDate>2014-10-05T20:54:11+08:00</lastBuildDate>
-        <pubDate>2014-10-05T20:54:11+08:00</pubDate>
+        <lastBuildDate>2014-10-05T21:24:50+08:00</lastBuildDate>
+        <pubDate>2014-10-05T21:24:50+08:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -27,6 +27,30 @@
 &lt;p&gt;Input: numbers={2, 7, 11, 15}, target=9
 Output: index1=1, index2=2&lt;/p&gt;
 
+&lt;h2 id=&quot;hash&quot;&gt;hash表解法:&lt;/h2&gt;
+
+&lt;p&gt;这种解法很简单，就是建立 &amp;lt;numbers[i],i&amp;gt; 这一对索引，遍历一遍numbers， 然后用target-numbers[i] 去找hash 表 ，如果存在 ，取出i，搞定!&lt;/p&gt;
+
+&lt;p&gt;时间复杂度是O(n), 空间复杂度是hash表的大小。&lt;/p&gt;
+
+&lt;p&gt;AC代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vector&amp;lt;int&amp;gt; twoSum(vector&amp;lt;int&amp;gt; &amp;amp;numbers, int target){
+    unordered_map&amp;lt;int, int&amp;gt; hash;
+    vector&amp;lt;int&amp;gt; result;
+    for (int i = 0; i &amp;lt; numbers.size(); i++{
+        int numberToFind = target - numbers[i];
+        if (hash.find(numberToFind) != hash.end()) {
+            result.push_back(hash[numberToFind] + 1);
+            result.push_back(i + 1);            
+            return result;
+        }
+        hash[numbers[i]] = i;
+    }
+    return result;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;h2 id=&quot;section-1&quot;&gt;快速排序+双指针解法：&lt;/h2&gt;
 
 &lt;p&gt;先将numbers数组从小到大进行快速排序，然后一个index i 从numbers[0]开始，另一个index j 从numbers的结束开始，往中间靠拢。在这个靠拢过程中，如果numbers[i] + numbers[j] &amp;lt; target 说明加和的值还不够，需要继续增加，那只能增大i了（因为numbers从小到大排序），如果numbers[i] + numbers[j] &amp;gt; target 说明加和的值大了，需要减小点，那也只能减小j了，如果numbers[i] + numbers[j] == target , 那说明我们找到了答案。由于题目要求给出原来数组中的位置，并且第一个数位置为1（而不是0），因此我们需要一个额外的数组暂存原来的数组，然后找到在原始数组中的位置。&lt;/p&gt;
@@ -34,11 +58,11 @@ Output: index1=1, index2=2&lt;/p&gt;
 &lt;p&gt;算法的时间复杂度是：快排O(nlogn) + 双指针O(n) + 找位置 O(n)  = O(nlogn) ，由于用到了一个额外数组，空间复杂度是O(n)。&lt;/p&gt;
 
 &lt;p&gt;AC的代码如下：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-class Solution {
+
+&lt;pre&gt;&lt;code&gt;class Solution {
 public:
-    vector&lt;int&gt; twoSum(vector&lt;int&gt; &amp;amp;numbers, int target) {
-        vector&lt;int&gt; result,tmp = numbers;
+    vector&amp;lt;int&amp;gt; twoSum(vector&amp;lt;int&amp;gt; &amp;amp;numbers, int target) {
+        vector&amp;lt;int&amp;gt; result,tmp = numbers;
         int a = 0,b = 0;
         sort(tmp.begin(),tmp.end());
         int i = 0 ,j = tmp.size()-1;
@@ -56,34 +80,8 @@ public:
         return result;
     }
 };
+&lt;/code&gt;&lt;/pre&gt;
 
-
-##hash表解法:##
-
-这种解法很简单，就是建立 &amp;lt;numbers[i],i&amp;gt; 这一对索引，遍历一遍numbers， 然后用target-numbers[i] 去找hash 表 ，如果存在 ，取出i，搞定!
-
-时间复杂度是O(n), 空间复杂度是hash表的大小。
-
-AC代码如下：
-
-&lt;pre&gt;&lt;code&gt;
-vector&lt;int&gt; twoSum(vector&lt;int&gt; &amp;amp;numbers, int target){
-    unordered_map&amp;lt;int, int&amp;gt; hash;
-    vector&lt;int&gt; result;
-    for (int i = 0; i &amp;lt; numbers.size(); i++{
-        int numberToFind = target - numbers[i];
-        if (hash.find(numberToFind) != hash.end()) {
-            result.push_back(hash[numberToFind] + 1);
-            result.push_back(i + 1);            
-            return result;
-        }
-        hash[numbers[i]] = i;
-    }
-    return result;
-}
-
-
-&lt;/int&gt;&lt;/int&gt;&lt;/int&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/int&gt;&lt;/int&gt;&lt;/int&gt;&lt;/code&gt;&lt;/pre&gt;
 </description>
                 <link>http://hombo.wang/leetcode/2014/10/05/Two-Sum</link>
                 <guid>http://hombo.wang/leetcode/2014/10/05/Two-Sum</guid>
