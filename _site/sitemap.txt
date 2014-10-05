@@ -9,21 +9,5 @@ http://hombo.wang/rss.xml
 http://hombo.wang/search.html
 http://hombo.wang/sitemap.txt
 http://hombo.wang/tags.html
-http://hombo.wang/2/index.html
-http://hombo.wang/3/index.html
 
-http://hombo.wang/openwrt/2014/08/11/helloworld_on_openwrt
-http://hombo.wang/openwrt/2014/08/11/error_on_compiling_openwrt
-http://hombo.wang/openwrt/2014/08/10/compile_openwrt
-http://hombo.wang/vocore/2014/08/06/first_start_of_vocore
-http://hombo.wang/daily/2014/08/04/paginate_and_excerpt_on_jekyll
-http://hombo.wang/vocore/2014/07/31/failed_on_first_start_of_vocore
-http://hombo.wang/vocore/2014/07/30/get_vocore
-http://hombo.wang/daily/2014/07/26/pagination_on_jekyll
-http://hombo.wang/daily/2014/04/28/win8_1_open_directory_problem
-http://hombo.wang/embedded/2014/04/20/Marvell88W8686_SPI_Interface
-http://hombo.wang/daily/2014/04/18/delete_document_on_kindle_cloud
-http://hombo.wang/linux/2014/04/16/sk_buff_analysis
-http://hombo.wang/linux/2014/04/15/qf9700_for_linux_3.0.8
-http://hombo.wang/embedded/2014/04/14/marvel_88w8686_wifi_linux_driver_analysis
-http://hombo.wang/android/2012/11/24/c_on_android
+http://hombo.wang/2014/10/05/Two-Sum
