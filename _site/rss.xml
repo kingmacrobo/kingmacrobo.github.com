@@ -5,8 +5,8 @@
         <description>Hombo's Blog - Hombo Wang</description>
         <link>http://hombo.wang</link>
         <link>http://hombo.wang</link>
-        <lastBuildDate>2014-10-05T20:40:54+08:00</lastBuildDate>
-        <pubDate>2014-10-05T20:40:54+08:00</pubDate>
+        <lastBuildDate>2014-10-05T20:45:29+08:00</lastBuildDate>
+        <pubDate>2014-10-05T20:45:29+08:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -15,8 +15,10 @@
                 <description>&lt;p&gt;这是一道基本的数组查找问题，需要O(n)的时间复杂度才能AC，有两种解答方法，一种是用排序和双指针，另一种是用hash表，下面具体来说。&lt;/p&gt;
 
 &lt;!--more--&gt;
-&lt;p&gt;##原文题目：##
-Given an array of integers, find two numbers such that they add up to a specific target number.&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;原文题目：&lt;/h2&gt;
+
+&lt;p&gt;Given an array of integers, find two numbers such that they add up to a specific target number.&lt;/p&gt;
 
 &lt;p&gt;The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.&lt;/p&gt;
 
@@ -25,7 +27,7 @@ Given an array of integers, find two numbers such that they add up to a specific
 &lt;p&gt;Input: numbers={2, 7, 11, 15}, target=9
 Output: index1=1, index2=2&lt;/p&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;快速排序+双指针解法：&lt;/h2&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;快速排序+双指针解法：&lt;/h2&gt;
 
 &lt;p&gt;先将numbers数组从小到大进行快速排序，然后一个index i 从numbers[0]开始，另一个index j 从numbers的结束开始，往中间靠拢。在这个靠拢过程中，如果numbers[i] + numbers[j] &amp;lt; target 说明加和的值还不够，需要继续增加，那只能增大i了（因为numbers从小到大排序），如果numbers[i] + numbers[j] &amp;gt; target 说明加和的值大了，需要减小点，那也只能减小j了，如果numbers[i] + numbers[j] == target , 那说明我们找到了答案。由于题目要求给出原来数组中的位置，并且第一个数位置为1（而不是0），因此我们需要一个额外的数组暂存原来的数组，然后找到在原始数组中的位置。&lt;/p&gt;
 
@@ -55,13 +57,13 @@ public:
     }
 };
 
-
 ##hash表解法：##
 
 这种解法很简单，就是建立 &amp;lt;numbers[i],i&amp;gt; 这一对索引，遍历一遍numbers， 然后用target-numbers[i] 去找hash 表 ，如果存在 ，取出i，搞定！
 时间复杂度是O(n), 空间复杂度是hash表的大小。
 
 AC代码如下：
+
 &lt;pre&gt;
 vector&lt;int&gt; twoSum(vector&lt;int&gt; &amp;amp;numbers, int target){
     unordered_map&amp;lt;int, int&amp;gt; hash;
