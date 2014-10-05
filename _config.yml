@@ -9,7 +9,7 @@ markdown: kramdown
 
 # The title and tagline is showed on homepage
 #
-title :  Simpleyyt 
+title :  Hombo 
 tagline: Hombo's Blog
 
 # Information about author
@@ -20,10 +20,11 @@ author :
 # Information for contacts showed at on the footer
 #
 contact :
-  e-mail : mailto:wanghongbo@ict.ac.cn
-  Github : https://github.com/kingmacrobo
-  WeiBo : http://www.weibo.com/mbkg
-  CSDN : http://blog.csdn.net/u013101828
+  e-mail  : mailto:wanghongbo@ict.ac.cn
+  LinkedIn: http://cn.linkedin.com/pub/hongbo-wang/70/4b0/921/
+  Github  : https://github.com/kingmacrobo
+  WeiBo   : http://www.weibo.com/mbkg
+  CSDN    : http://blog.csdn.net/u013101828
   
 # Links showed on the footer
 #
