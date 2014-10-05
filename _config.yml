@@ -9,8 +9,8 @@ markdown: kramdown
 
 # The title and tagline is showed on homepage
 #
-title :  Hombo 
-tagline: Hombo's Blog
+title :  Hombo's Blog 
+tagline: 
 
 # Information about author
 #
