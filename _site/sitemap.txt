@@ -9,9 +9,11 @@ http://hombo.wang/rss.xml
 http://hombo.wang/search.html
 http://hombo.wang/sitemap.txt
 http://hombo.wang/tags.html
+http://hombo.wang/2/index.html
 
 http://hombo.wang/leetcode/2014/10/06/surrounded-regions
 http://hombo.wang/leetcode/2014/10/06/sum-root-to-leaf-numbers
+http://hombo.wang/leetcode/2014/10/06/longest-consecutive-sequence
 http://hombo.wang/hosts/2014/10/06/hosts
 http://hombo.wang/algorithm/2014/10/05/swap-two-int
 http://hombo.wang/leetcode/2014/10/05/Two-Sum

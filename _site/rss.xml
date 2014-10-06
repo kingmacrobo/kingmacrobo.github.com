@@ -5,8 +5,8 @@
         <description>Hombo's Blog - Hombo Wang</description>
         <link>http://hombo.wang</link>
         <link>http://hombo.wang</link>
-        <lastBuildDate>2014-10-06T20:41:10+08:00</lastBuildDate>
-        <pubDate>2014-10-06T20:41:10+08:00</pubDate>
+        <lastBuildDate>2014-10-06T21:59:12+08:00</lastBuildDate>
+        <pubDate>2014-10-06T21:59:12+08:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -184,6 +184,85 @@ public:
 </description>
                 <link>http://hombo.wang/leetcode/2014/10/06/sum-root-to-leaf-numbers</link>
                 <guid>http://hombo.wang/leetcode/2014/10/06/sum-root-to-leaf-numbers</guid>
+                <pubDate>2014-10-06T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>Longest Consecutive Sequence</title>
+                <description>&lt;p&gt;Given an unsorted array of integers, find the length of the longest consecutive elements sequence. For example,&lt;/p&gt;
+
+&lt;p&gt;Given &lt;code&gt;[100, 4, 200, 1, 3, 2]&lt;/code&gt;,&lt;/p&gt;
+
+&lt;p&gt;The longest consecutive elements sequence is &lt;code&gt;[1, 2, 3, 4]&lt;/code&gt;. Return its length: &lt;code&gt;4&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Your algorithm should run in &lt;code&gt;O(n)&lt;/code&gt; complexity.&lt;/p&gt;
+
+&lt;p&gt;此题可以用hashmap在&lt;code&gt;O(n)&lt;/code&gt; 时间复杂度解决。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;一看是无需数组，又要求&lt;code&gt;O(n)&lt;/code&gt;复杂度实现，很自然的可以想到用hashmap。&lt;/p&gt;
+
+&lt;p&gt;具体方法就是将数组全部hash了，然后在对数组的每个元素进行一边查找，&lt;/p&gt;
+
+&lt;p&gt;例如对于数组的第i个数，我们不断判断&lt;code&gt;num[i]+1&lt;/code&gt;是否在hash表里，如果在说明数组存在比&lt;code&gt;num[i]&lt;/code&gt;大1的数，然后继续判断&lt;code&gt;num[i]+2&lt;/code&gt;……直到&lt;code&gt;num[i]+k&lt;/code&gt;不再hash表里位置，在这个过程中需要记录长度。&lt;/p&gt;
+
+&lt;p&gt;只用上面的算法不能保证是&lt;code&gt;O(n)&lt;/code&gt;的，看下面的例子&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;数组是 `[7,6,5,4,3]`
+
+查找过程是： 
+
+7: `7`
+6: `6,7`
+5: `5,6,7`
+4: `4,5,6,7`
+3: `3,4,5,6,7`
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;显然复杂度最坏未为&lt;code&gt;O(n^2)&lt;/code&gt;, 了保证算法是&lt;code&gt;O(n)&lt;/code&gt;的，我们要用一些小技巧，让数组中已经被判断过的数不再去判断，其实很简单，就是加一个标示，表示这个数是否在前面的数里面判断过了，我们还可以将每次判断出来的长度存在这次判断最开始的那个数的hashmap中，这样下次如果加到这个数的时候，可以直接用这个长度值，而不需要往后遍历了，例如&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;5: 5,6,7   把长度3存在hashmap : &amp;lt;5,3&amp;gt;
+4: 4,5,6,7 当4 上加到5的时候，可以从&amp;lt;5,3&amp;gt;直到5后面连续的长度是3，就不用再遍历了。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样就可以保证算法是O(n)的了，空间复杂度是hash表大小。&lt;/p&gt;
+
+&lt;p&gt;AC代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution {
+public:
+    int longestConsecutive(vector&amp;lt;int&amp;gt; &amp;amp;num) {
+        unordered_map&amp;lt;int,int&amp;gt; hash;
+        int max = 0,count,j;
+        unordered_map&amp;lt;int,int&amp;gt;::iterator it;
+        for(int i = 0 ; i &amp;lt; num.size(); ++i) hash.insert({num[i],-1});
+        for(int i = 0 ; i &amp;lt; num.size(); ++i){
+            if(hash.find(num[i])-&amp;gt;second!=-1) continue;
+            count = 1;
+            j = num[i]+1;
+            while((it=hash.find(j++))!=hash.end()){
+                if(it-&amp;gt;second &amp;gt; 0){
+                    count += it-&amp;gt;second;
+                    break;
+                }
+                it-&amp;gt;second = 0;
+                ++count;
+            }
+            hash.find(num[i])-&amp;gt;second = count;
+            if(max &amp;lt; count) max = count;
+        }
+        return max;
+    }
+    
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;另外，还有一种算法是同时从num[i]的两边不断判断，并标记已经判断过的的数，这种方法可以省去一些长度的记录。&lt;/p&gt;
+
+</description>
+                <link>http://hombo.wang/leetcode/2014/10/06/longest-consecutive-sequence</link>
+                <guid>http://hombo.wang/leetcode/2014/10/06/longest-consecutive-sequence</guid>
                 <pubDate>2014-10-06T00:00:00+08:00</pubDate>
         </item>
 
