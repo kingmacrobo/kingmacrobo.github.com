@@ -4,7 +4,7 @@
  <title>Hombo's Blog</title>
  <link href="http://hombo.wang/" rel="self"/>
  <link href="http://hombo.wang"/>
- <updated>2014-10-06T21:59:12+08:00</updated>
+ <updated>2014-10-07T00:28:35+08:00</updated>
  <id>http://hombo.wang</id>
  <author>
    <name>Hombo Wang</name>
@@ -319,9 +319,9 @@ public:
 题目是： 填写下面的函数，实现a和b指针指向的两个数的交换。&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;void swap(int *a , int *b){
-    *a = ________ ;
-    *b = ________ ;
-    *a = ________ ;
+    a = ________ ;
+    b = ________ ;
+    a = ________ ;
 }
 &lt;/code&gt;&lt;/pre&gt;
 
