@@ -5,10 +5,119 @@
         <description>Hombo's Blog - Hombo Wang</description>
         <link>http://hombo.wang</link>
         <link>http://hombo.wang</link>
-        <lastBuildDate>2014-10-06T15:32:53+08:00</lastBuildDate>
-        <pubDate>2014-10-06T15:32:53+08:00</pubDate>
+        <lastBuildDate>2014-10-06T18:51:50+08:00</lastBuildDate>
+        <pubDate>2014-10-06T18:51:50+08:00</pubDate>
         <ttl>1800</ttl>
 
+
+        <item>
+                <title>Leetcode Surrounded Regions</title>
+                <description>&lt;p&gt;这是一道图搜索题，关键在于用DFS或BFS搜索时，处理好边界条件和其他限制条件，例如遇到&lt;code&gt;‘X’&lt;/code&gt;就停止这条路的搜索。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;原文题目：&lt;/h2&gt;
+
+&lt;p&gt;Given a 2D board containing &lt;code&gt;&#39;X&#39;&lt;/code&gt; and &lt;code&gt;&#39;O&#39;&lt;/code&gt;, capture all regions surrounded by &lt;code&gt;&#39;X&#39;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;A region is captured by flipping all ‘O’s into &lt;code&gt;&#39;X&#39;&lt;/code&gt;s in that surrounded region.&lt;/p&gt;
+
+&lt;p&gt;For example,&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;X X X X
+X O O X
+X X O X
+X O X X
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After running your function, the board should be:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;X X X X
+X X X X
+X X X X
+X O X X
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;分析：&lt;/h2&gt;
+
+&lt;p&gt;题目的意思是说把这个2D board中完全被&lt;code&gt;&#39;X&#39;&lt;/code&gt;包住的&lt;code&gt;&#39;O&#39;&lt;/code&gt;的区域全部替换为&lt;code&gt;&#39;X&#39;&lt;/code&gt;，就像上面给出的一个例子，内部的三个&lt;code&gt;&#39;O&#39;&lt;/code&gt;被替换了，而边界的&lt;code&gt;&#39;O&#39;&lt;/code&gt;由于没有被包住而不需要替换。&lt;/p&gt;
+
+&lt;p&gt;这道题其实就是一个图的搜索问题，可以把这个2D board看成由几个连通子图构成的，连通子图由全&lt;code&gt;O&lt;/code&gt;或者全&lt;code&gt;X&lt;/code&gt;构成&lt;/p&gt;
+
+&lt;p&gt;搜索的过程是这样的：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1. 从头开始遍历这个2D board， 如果遇到一个`O` ，就从这个`O` 开始进行DFS或者BFS遍历它的连通子图，边界条件就是遇到`X`或者board的边界停止。我们知道连通子图之间是没有路径的，这样就不会对其他子图产生影响。
+
+2. 在遍历的过程中，不断判断是否有`O`在board的边界，如果有，就标记这个子图为`需要替换为‘X’的子图`，在遍历结束后将这个子图中的元素全部替换成`X`。子图的存储可以用一个vector实现。
+
+3. 然后继续在board中往后找没有被访问过的`O`，继续上面的过程，直至结束。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样我们就完成了题目的要求。&lt;/p&gt;
+
+&lt;p&gt;这里用&lt;code&gt;DFS&lt;/code&gt;和&lt;code&gt;BFS&lt;/code&gt;都行，时间复杂度是O(n)，由于要借助一定空间来做标记和存储子图，所以空间复杂度是O(n)&lt;/p&gt;
+
+&lt;p&gt;这个只给出用&lt;code&gt;DFS&lt;/code&gt;AC的代码，&lt;code&gt;BFS&lt;/code&gt;的实现方式把stack换成queue就行了。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Solution {
+public:
+    void solve(vector&amp;lt;vector&amp;lt;char&amp;gt;&amp;gt; &amp;amp;board) {
+        if(board.size()&amp;lt;=2||board[0].size()&amp;lt;=2) return;
+        stack&amp;lt;pair&amp;lt;int,int&amp;gt;&amp;gt; s; //DFS stack
+        int xsize = board.size(), ysize = board[0].size();
+        vector&amp;lt;vector&amp;lt;bool&amp;gt;&amp;gt; record(xsize,vector&amp;lt;bool&amp;gt;(ysize,false)); // 访问标记
+        vector&amp;lt;pair&amp;lt;int,int&amp;gt;&amp;gt; canlist; //存储连通子图
+        bool can = true;
+        for(int i = 1 ; i &amp;lt; xsize-1 ; ++i){
+            for(int j = 1 ; j &amp;lt; ysize-1 ; ++j){ //遍历所有未访问的‘O’
+                if(board[i][j] == &#39;O&#39;&amp;amp;&amp;amp;!record[i][j]){
+                    can = true;
+                    s.push(make_pair(i,j));
+                    canlist.push_back(make_pair(i,j));
+                    record[i][j] = true;
+                    while(!s.empty()){ //DFS
+                        pair&amp;lt;int,int&amp;gt; p = s.top();
+                        s.pop();
+                        if(can&amp;amp;&amp;amp;(p.first==0||p.first==xsize-1||p.second==0||p.second==ysize-1))
+                            can = false;
+                        if((p.first&amp;gt;0)&amp;amp;&amp;amp;board[p.first-1][p.second]==&#39;O&#39;&amp;amp;&amp;amp;!record[p.first-1][p.second]){
+                            s.push(make_pair(p.first-1,p.second));
+                            record[p.first-1][p.second] = true;
+                            canlist.push_back(make_pair(p.first-1,p.second));
+                        }
+                        if((p.first&amp;lt;xsize-1)&amp;amp;&amp;amp;board[p.first+1][p.second]==&#39;O&#39;&amp;amp;&amp;amp;!record[p.first+1][p.second]){
+                            s.push(make_pair(p.first+1,p.second));
+                            record[p.first+1][p.second] = true;
+                            canlist.push_back(make_pair(p.first+1,p.second));
+                        }
+                        if((p.second&amp;gt;0)&amp;amp;&amp;amp;board[p.first][p.second-1]==&#39;O&#39;&amp;amp;&amp;amp;!record[p.first][p.second-1]){
+                            s.push(make_pair(p.first,p.second-1));
+                            record[p.first][p.second-1] = true;
+                            canlist.push_back(make_pair(p.first,p.second-1));
+                        }
+                        if((p.second&amp;lt;ysize-1)&amp;amp;&amp;amp;board[p.first][p.second+1]==&#39;O&#39;&amp;amp;&amp;amp;!record[p.first][p.second+1]){
+                            s.push(make_pair(p.first,p.second+1));
+                            record[p.first][p.second+1] = true;
+                            canlist.push_back(make_pair(p.first,p.second+1));
+                        }
+                    }
+                    if(can){ //改变连通子图中的&#39;O&#39;为‘X’
+                        for(int w = 0 ; w &amp;lt; canlist.size() ; ++w)
+                            board[canlist[w].first][canlist[w].second] = &#39;X&#39;;
+                    }
+                    canlist.clear();
+                }
+            }
+        }
+    }
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+</description>
+                <link>http://hombo.wang/leetcode/2014/10/06/surrounded-regions</link>
+                <guid>http://hombo.wang/leetcode/2014/10/06/surrounded-regions</guid>
+                <pubDate>2014-10-06T00:00:00+08:00</pubDate>
+        </item>
 
         <item>
                 <title>无私分享一个翻墙的好方法</title>
