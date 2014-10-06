@@ -4,7 +4,7 @@
  <title>Hombo's Blog</title>
  <link href="http://hombo.wang/" rel="self"/>
  <link href="http://hombo.wang"/>
- <updated>2014-10-06T18:51:50+08:00</updated>
+ <updated>2014-10-06T20:41:10+08:00</updated>
  <id>http://hombo.wang</id>
  <author>
    <name>Hombo Wang</name>
@@ -113,6 +113,74 @@ public:
                     canlist.clear();
                 }
             }
+        }
+    }
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Sum Root to Leaf Numbers</title>
+   <link href="http://hombo.wang/leetcode/2014/10/06/sum-root-to-leaf-numbers"/>
+   <updated>2014-10-06T00:00:00+08:00</updated>
+   <id>http://hombo.wang/leetcode/2014/10/06/sum-root-to-leaf-numbers</id>
+   <content type="html">&lt;p&gt;leetcode上比较简单的一道题了，一个二叉树，结点用0～9的数表示，让你求所有从根到叶的连起来的数的加和。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;原文题目：&lt;/h2&gt;
+
+&lt;p&gt;Given a binary tree containing digits from &lt;code&gt;0-9&lt;/code&gt; only, each &lt;code&gt;root-to-leaf&lt;/code&gt; path could represent a number.&lt;/p&gt;
+
+&lt;p&gt;An example is the root-to-leaf path &lt;code&gt;1-&amp;gt;2-&amp;gt;3&lt;/code&gt; which represents the number &lt;code&gt;123&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Find the total sum of all &lt;code&gt;root-to-leaf&lt;/code&gt; numbers.&lt;/p&gt;
+
+&lt;p&gt;For example,&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    1
+   / \
+  2   3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The root-to-leaf path &lt;code&gt;1-&amp;gt;2&lt;/code&gt; represents the number &lt;code&gt;12&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The root-to-leaf path &lt;code&gt;1-&amp;gt;3&lt;/code&gt; represents the number &lt;code&gt;13&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Return the &lt;code&gt;sum = 12 + 13 = 25&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;分析：&lt;/h2&gt;
+
+&lt;p&gt;要想得到全部的root到leaf的值的总和，我们需要用一个全局的变量sum来保存加和的结果，并且需要父结点向儿子结点传递当前&lt;code&gt;前缀值&lt;/code&gt;，做到这两点，用一次DFS就行了，只需要对树进行一次遍历即可，如果遍历到叶结点，就将这条路径值加到sum。&lt;/p&gt;
+
+&lt;p&gt;AC的代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int sum;
+    int sumNumbers(TreeNode *root) {
+        sum = 0;
+        if(root == NULL) return 0;
+        travel(root,0);
+        return sum;
+    }
+    void travel(TreeNode *node,int pre){
+        if(node-&amp;gt;left == NULL &amp;amp;&amp;amp; node-&amp;gt;right == NULL)
+            sum += pre*10+node-&amp;gt;val;
+        else{
+            if(node-&amp;gt;left != NULL) travel(node-&amp;gt;left,pre*10+node-&amp;gt;val);
+            if(node-&amp;gt;right != NULL) travel(node-&amp;gt;right,pre*10+node-&amp;gt;val);
         }
     }
 };
