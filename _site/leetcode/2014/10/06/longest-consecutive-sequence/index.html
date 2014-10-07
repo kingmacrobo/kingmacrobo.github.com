@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	
+	<title>Longest Consecutive Sequence</title>
+    
+	
+	<meta name="author" content="Hombo Wang">
+	
+	<link rel="stylesheet" href="/assets/themes/Snail/css/jquery.fancybox.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/main.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/pages/journal.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/team.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/static.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/errors.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/google-code-prettify/prettify.css">
+	
+	<link rel="shortcut icon" href="/assets/themes/Snail/img/favicon.ico">
+	
+	<script type="text/javascript" src="/assets/themes/Snail/js/jquery.min.js"></script>
+	
+	<script type="text/javascript" src="/assets/themes/Snail/js/auto_loadmore.js"></script>
+	
+	<script type="text/javascript" src="/assets/themes/Snail/google-code-prettify/prettify.js"></script>
+	
+	<script type="text/javascript">
+	  $(function(){
+		$("pre code").addClass("prettyprint linenums");
+		prettyPrint();
+	  });
+	</script>
+	
+<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+</head>
+<body>
+	<noscript>
+		&amp;lt;div id="no-js"&amp;gt;Please enable JavaScript in your browser to experience / fully&amp;lt;/div&amp;gt;
+	</noscript>
+    <div id="page-container">
+		<div>
+            <div style="margin:2px 0px 2px 805px;width:340px; height:25px;">
+                <img src="http://counter6.statcounterfree.com/private/freecounterstat.php?c=586cbed92fda4763cc77bf3587fbe134" border="0" title="free website counter" alt="free website counter"></td>
+            </div>
+			<nav>
+	<div id="nav-l">
+	</div>
+	<div id="nav-c">
+		<ul id="nav-list" style="width: 700px;">
+			<li id="home"><a href="/">Home</a></li>
+			
+			
+			
+				
+				  
+				
+			 
+				
+				  
+					
+					<li id = "About Me"><a href="/about.html">About Me</a></li>
+					
+				  
+				
+			 
+				
+				  
+					
+					<li id = "Archive"><a href="/archive.html">Archive</a></li>
+					
+				  
+				
+			 
+				
+				  
+				
+			 
+				
+				  
+					
+					<li id = "Categories"><a href="/categories.html">Categories</a></li>
+					
+				  
+				
+			 
+				
+			 
+				
+				  
+				
+			 
+				
+				  
+				
+			 
+				
+				  
+				
+			 
+				
+				  
+					
+					<li id = "Tags"><a href="/tags.html">Tags</a></li>
+					
+				  
+				
+			 
+				
+			 
+			
+			
+		</ul>
+		<form id="nav-search" method="GET" action="/search.html">
+			<div id="search-right-pix">
+				<div id="search-left-pix">
+					<div id="search-center-pix">
+						<div id="search-icon-pix"></div>
+						<input name="query" type="text" placeholder="Search">
+					</div>
+				</div>
+			</div>
+		</form>
+		
+		
+	</div>
+	<div id="nav-r">
+	</div>
+</nav>
+			<div id="page-content">
+				
+<div id="page-content">
+	<div class="cont932">
+	<div id="journal-articles-block">
+		<div class="journal-article">
+			<div class="journal-post-info">
+				<div class="journal-cat-box">
+				
+				
+				<div class="journal-cat-box">
+
+<a href="/categories.html#leetcode-ref" title="leetcode">
+	leetcode
+
+</a>
+</div>
+				
+				</div>
+			</div>
+			<div class="journal-body">
+				<h1 class="journal-title">Longest Consecutive Sequence<span class="author">by hombo</span>
+				</h1>
+				<span class="the-article">
+				<p>Given an unsorted array of integers, find the length of the longest consecutive elements sequence. For example,</p>
+
+<p>Given <code>[100, 4, 200, 1, 3, 2]</code>,</p>
+
+<p>The longest consecutive elements sequence is <code>[1, 2, 3, 4]</code>. Return its length: <code>4</code>.</p>
+
+<p>Your algorithm should run in <code>O(n)</code> complexity.</p>
+
+<p>此题可以用hashmap在<code>O(n)</code> 时间复杂度解决。</p>
+
+<!--more-->
+
+<p>一看是无需数组，又要求<code>O(n)</code>复杂度实现，很自然的可以想到用hashmap。</p>
+
+<p>具体方法就是将数组全部hash了，然后在对数组的每个元素进行一边查找，</p>
+
+<p>例如对于数组的第i个数，我们不断判断<code>num[i]+1</code>是否在hash表里，如果在说明数组存在比<code>num[i]</code>大1的数，然后继续判断<code>num[i]+2</code>……直到<code>num[i]+k</code>不再hash表里位置，在这个过程中需要记录长度。</p>
+
+<p>只用上面的算法不能保证是<code>O(n)</code>的，看下面的例子</p>
+
+<pre><code>数组是 `[7,6,5,4,3]`
+
+查找过程是： 
+
+7: `7`
+6: `6,7`
+5: `5,6,7`
+4: `4,5,6,7`
+3: `3,4,5,6,7`
+</code></pre>
+
+<p>显然复杂度最坏未为<code>O(n^2)</code>, 了保证算法是<code>O(n)</code>的，我们要用一些小技巧，让数组中已经被判断过的数不再去判断，其实很简单，就是加一个标示，表示这个数是否在前面的数里面判断过了，我们还可以将每次判断出来的长度存在这次判断最开始的那个数的hashmap中，这样下次如果加到这个数的时候，可以直接用这个长度值，而不需要往后遍历了，例如</p>
+
+<pre><code>5: 5,6,7   把长度3存在hashmap : &lt;5,3&gt;
+4: 4,5,6,7 当4 上加到5的时候，可以从&lt;5,3&gt;直到5后面连续的长度是3，就不用再遍历了。
+</code></pre>
+
+<p>这样就可以保证算法是O(n)的了，空间复杂度是hash表大小。</p>
+
+<p>AC代码如下：</p>
+
+<pre><code>class Solution {
+public:
+    int longestConsecutive(vector&lt;int&gt; &amp;num) {
+        unordered_map&lt;int,int&gt; hash;
+        int max = 0,count,j;
+        unordered_map&lt;int,int&gt;::iterator it;
+        for(int i = 0 ; i &lt; num.size(); ++i) hash.insert({num[i],-1});
+        for(int i = 0 ; i &lt; num.size(); ++i){
+            if(hash.find(num[i])-&gt;second!=-1) continue;
+            count = 1;
+            j = num[i]+1;
+            while((it=hash.find(j++))!=hash.end()){
+                if(it-&gt;second &gt; 0){
+                    count += it-&gt;second;
+                    break;
+                }
+                it-&gt;second = 0;
+                ++count;
+            }
+            hash.find(num[i])-&gt;second = count;
+            if(max &lt; count) max = count;
+        }
+        return max;
+    }
+    
+};
+</code></pre>
+
+<p>另外，还有一种算法是同时从num[i]的两边不断判断，并标记已经判断过的的数，这种方法可以省去一些长度的记录。</p>
+
+
+				</span>
+				<div class="journal-date">Published 06 October 2014</div>
+				<div class="journal-tags">
+				
+				
+	 
+		<a class="tag-cont" href="/tags.html#leetcode-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">leetcode</div>
+			<div class="tag-r"></div>
+		</a>
+	 
+		<a class="tag-cont" href="/tags.html#algorithm-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">algorithm</div>
+			<div class="tag-r"></div>
+		</a>
+	 
+		<a class="tag-cont" href="/tags.html#c++-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">c++</div>
+			<div class="tag-r"></div>
+		</a>
+	 
+		<a class="tag-cont" href="/tags.html#hash-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">hash</div>
+			<div class="tag-r"></div>
+		</a>
+	
+
+
+
+				</div>
+			</div>
+		</div>
+		<div class="clearboth"></div>
+	</div>
+</div>
+	<div class="clearboth"></div>
+	
+
+
+  <!-- 多说评论框 start -->
+<div id="comments">
+    <div class="ds-thread" data-thread-key="/leetcode/2014/10/06/longest-consecutive-sequence"  data-title="Longest Consecutive Sequence - Hombo's Blog"></div>
+</div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hombo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+	<div class="clearboth"></div>
+</div>
+
+			</div>
+			<div class="clearboth pagebottom"></div>
+		</div>
+	</div>
+    <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=5&amp;fs=4&amp;bgcolor=Orange"></script>
+
+	<footer>
+	<div class="footer-940">
+		<div class="footer-general-info">
+			© 2014 Hombo Wang.<br><br>
+			Content licensed under:<br>
+			<a class="cc" href="http://creativecommons.org/licenses/by-sa/3.0/">c a b</a><br>
+			<a href = "/about.html">About Me</a><br>
+		</div>
+		<div class="footer-col-cont">
+			<div class="footer-nav-col">
+				<h4><a>Categories</a></h4>
+				<ul>
+					
+					
+
+
+  
+     
+    	<li><a href="/categories.html#leetcode-ref">
+    		leetcode <span>4</span>
+    	</a></li>
+     
+    	<li><a href="/categories.html#algorithm-ref">
+    		algorithm <span>1</span>
+    	</a></li>
+     
+    	<li><a href="/categories.html#hosts-ref">
+    		hosts <span>1</span>
+    	</a></li>
+    
+  
+
+
+				</ul>
+			</div>
+			<div class="footer-nav-col">
+				<h4><a>Pages</a></h4>
+				<ul>
+					
+					
+					
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/about.html">About Me</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+    
+  
+
+
+
+				</ul>
+			</div>
+			<div class="footer-nav-col">
+				<h4><a>Feed</a></h4>
+				<ul>
+					<li><a href="/atom.xml">Atom Feed</a></li>
+					<li><a href="/rss.xml">RSS Feed</a></li>
+				</ul>
+			</div>
+			<div class="footer-nav-col">
+				<h4><a>Links</a></h4>
+				<ul>
+				 
+					<li><a href = "http://hombo.wang">Hombo's Blog</a></li>
+				
+				</ul>
+			</div>
+			<div class="footer-nav-col">
+				<h4><a href = "/about.html">About Me</a></h4>
+				<ul>
+				 
+					<li><a href = "mailto:wanghongbo@ict.ac.cn">e-mail</a></li>
+				 
+					<li><a href = "http://cn.linkedin.com/pub/hongbo-wang/70/4b0/921/">LinkedIn</a></li>
+				 
+					<li><a href = "https://github.com/kingmacrobo">Github</a></li>
+				 
+					<li><a href = "http://www.weibo.com/mbkg">WeiBo</a></li>
+				 
+					<li><a href = "http://blog.csdn.net/u013101828">CSDN</a></li>
+				
+				</ul>
+			</div>
+			<div class="clearboth"></div>
+		</div>
+		<div class="clearboth"></div>
+	</div>
+	<div class="clearboth"></div>
+</footer>
+	
+</body>
+</html>
+

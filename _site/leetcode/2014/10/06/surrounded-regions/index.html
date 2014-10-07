@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	
+	<title>Leetcode Surrounded Regions</title>
+    
+	
+	<meta name="author" content="Hombo Wang">
+	
+	<link rel="stylesheet" href="/assets/themes/Snail/css/jquery.fancybox.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/main.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/pages/journal.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/team.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/static.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/errors.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/google-code-prettify/prettify.css">
+	
+	<link rel="shortcut icon" href="/assets/themes/Snail/img/favicon.ico">
+	
+	<script type="text/javascript" src="/assets/themes/Snail/js/jquery.min.js"></script>
+	
+	<script type="text/javascript" src="/assets/themes/Snail/js/auto_loadmore.js"></script>
+	
+	<script type="text/javascript" src="/assets/themes/Snail/google-code-prettify/prettify.js"></script>
+	
+	<script type="text/javascript">
+	  $(function(){
+		$("pre code").addClass("prettyprint linenums");
+		prettyPrint();
+	  });
+	</script>
+	
+<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+</head>
+<body>
+	<noscript>
+		&amp;lt;div id="no-js"&amp;gt;Please enable JavaScript in your browser to experience / fully&amp;lt;/div&amp;gt;
+	</noscript>
+    <div id="page-container">
+		<div>
+            <div style="margin:2px 0px 2px 805px;width:340px; height:25px;">
+                <img src="http://counter6.statcounterfree.com/private/freecounterstat.php?c=586cbed92fda4763cc77bf3587fbe134" border="0" title="free website counter" alt="free website counter"></td>
+            </div>
+			<nav>
+	<div id="nav-l">
+	</div>
+	<div id="nav-c">
+		<ul id="nav-list" style="width: 700px;">
+			<li id="home"><a href="/">Home</a></li>
+			
+			
+			
+				
+				  
+				
+			 
+				
+				  
+					
+					<li id = "About Me"><a href="/about.html">About Me</a></li>
+					
+				  
+				
+			 
+				
+				  
+					
+					<li id = "Archive"><a href="/archive.html">Archive</a></li>
+					
+				  
+				
+			 
+				
+				  
+				
+			 
+				
+				  
+					
+					<li id = "Categories"><a href="/categories.html">Categories</a></li>
+					
+				  
+				
+			 
+				
+			 
+				
+				  
+				
+			 
+				
+				  
+				
+			 
+				
+				  
+				
+			 
+				
+				  
+					
+					<li id = "Tags"><a href="/tags.html">Tags</a></li>
+					
+				  
+				
+			 
+				
+			 
+			
+			
+		</ul>
+		<form id="nav-search" method="GET" action="/search.html">
+			<div id="search-right-pix">
+				<div id="search-left-pix">
+					<div id="search-center-pix">
+						<div id="search-icon-pix"></div>
+						<input name="query" type="text" placeholder="Search">
+					</div>
+				</div>
+			</div>
+		</form>
+		
+		
+	</div>
+	<div id="nav-r">
+	</div>
+</nav>
+			<div id="page-content">
+				
+<div id="page-content">
+	<div class="cont932">
+	<div id="journal-articles-block">
+		<div class="journal-article">
+			<div class="journal-post-info">
+				<div class="journal-cat-box">
+				
+				
+				<div class="journal-cat-box">
+
+<a href="/categories.html#leetcode-ref" title="leetcode">
+	leetcode
+
+</a>
+</div>
+				
+				</div>
+			</div>
+			<div class="journal-body">
+				<h1 class="journal-title">Leetcode Surrounded Regions<span class="author">by hombo</span>
+				</h1>
+				<span class="the-article">
+				<p>这是一道图搜索题，关键在于用DFS或BFS搜索时，处理好边界条件和其他限制条件，例如遇到<code>‘X’</code>就停止这条路的搜索。</p>
+
+<!--more-->
+
+<h2 id="section">原文题目：</h2>
+
+<p>Given a 2D board containing <code>'X'</code> and <code>'O'</code>, capture all regions surrounded by <code>'X'</code>.</p>
+
+<p>A region is captured by flipping all ‘O’s into <code>'X'</code>s in that surrounded region.</p>
+
+<p>For example,</p>
+
+<pre><code>X X X X
+X O O X
+X X O X
+X O X X
+</code></pre>
+
+<p>After running your function, the board should be:</p>
+
+<pre><code>X X X X
+X X X X
+X X X X
+X O X X
+</code></pre>
+
+<h2 id="section-1">分析：</h2>
+
+<p>题目的意思是说把这个2D board中完全被<code>'X'</code>包住的<code>'O'</code>的区域全部替换为<code>'X'</code>，就像上面给出的一个例子，内部的三个<code>'O'</code>被替换了，而边界的<code>'O'</code>由于没有被包住而不需要替换。</p>
+
+<p>这道题其实就是一个图的搜索问题，可以把这个2D board看成由几个连通子图构成的，连通子图由全<code>O</code>或者全<code>X</code>构成</p>
+
+<p>搜索的过程是这样的：</p>
+
+<pre><code>1. 从头开始遍历这个2D board， 如果遇到一个`O` ，就从这个`O` 开始进行DFS或者BFS遍历它的连通子图，边界条件就是遇到`X`或者board的边界停止。我们知道连通子图之间是没有路径的，这样就不会对其他子图产生影响。
+
+2. 在遍历的过程中，不断判断是否有`O`在board的边界，如果有，就标记这个子图为`需要替换为‘X’的子图`，在遍历结束后将这个子图中的元素全部替换成`X`。子图的存储可以用一个vector实现。
+
+3. 然后继续在board中往后找没有被访问过的`O`，继续上面的过程，直至结束。
+</code></pre>
+
+<p>这样我们就完成了题目的要求。</p>
+
+<p>这里用<code>DFS</code>和<code>BFS</code>都行，时间复杂度是O(n)，由于要借助一定空间来做标记和存储子图，所以空间复杂度是O(n)</p>
+
+<p>这个只给出用<code>DFS</code>AC的代码，<code>BFS</code>的实现方式把stack换成queue就行了。</p>
+
+<pre><code>class Solution {
+public:
+    void solve(vector&lt;vector&lt;char&gt;&gt; &amp;board) {
+        if(board.size()&lt;=2||board[0].size()&lt;=2) return;
+        stack&lt;pair&lt;int,int&gt;&gt; s; //DFS stack
+        int xsize = board.size(), ysize = board[0].size();
+        vector&lt;vector&lt;bool&gt;&gt; record(xsize,vector&lt;bool&gt;(ysize,false)); // 访问标记
+        vector&lt;pair&lt;int,int&gt;&gt; canlist; //存储连通子图
+        bool can = true;
+        for(int i = 1 ; i &lt; xsize-1 ; ++i){
+            for(int j = 1 ; j &lt; ysize-1 ; ++j){ //遍历所有未访问的‘O’
+                if(board[i][j] == 'O'&amp;&amp;!record[i][j]){
+                    can = true;
+                    s.push(make_pair(i,j));
+                    canlist.push_back(make_pair(i,j));
+                    record[i][j] = true;
+                    while(!s.empty()){ //DFS
+                        pair&lt;int,int&gt; p = s.top();
+                        s.pop();
+                        if(can&amp;&amp;(p.first==0||p.first==xsize-1||p.second==0||p.second==ysize-1))
+                            can = false;
+                        if((p.first&gt;0)&amp;&amp;board[p.first-1][p.second]=='O'&amp;&amp;!record[p.first-1][p.second]){
+                            s.push(make_pair(p.first-1,p.second));
+                            record[p.first-1][p.second] = true;
+                            canlist.push_back(make_pair(p.first-1,p.second));
+                        }
+                        if((p.first&lt;xsize-1)&amp;&amp;board[p.first+1][p.second]=='O'&amp;&amp;!record[p.first+1][p.second]){
+                            s.push(make_pair(p.first+1,p.second));
+                            record[p.first+1][p.second] = true;
+                            canlist.push_back(make_pair(p.first+1,p.second));
+                        }
+                        if((p.second&gt;0)&amp;&amp;board[p.first][p.second-1]=='O'&amp;&amp;!record[p.first][p.second-1]){
+                            s.push(make_pair(p.first,p.second-1));
+                            record[p.first][p.second-1] = true;
+                            canlist.push_back(make_pair(p.first,p.second-1));
+                        }
+                        if((p.second&lt;ysize-1)&amp;&amp;board[p.first][p.second+1]=='O'&amp;&amp;!record[p.first][p.second+1]){
+                            s.push(make_pair(p.first,p.second+1));
+                            record[p.first][p.second+1] = true;
+                            canlist.push_back(make_pair(p.first,p.second+1));
+                        }
+                    }
+                    if(can){ //改变连通子图中的'O'为‘X’
+                        for(int w = 0 ; w &lt; canlist.size() ; ++w)
+                            board[canlist[w].first][canlist[w].second] = 'X';
+                    }
+                    canlist.clear();
+                }
+            }
+        }
+    }
+};
+</code></pre>
+
+
+				</span>
+				<div class="journal-date">Published 06 October 2014</div>
+				<div class="journal-tags">
+				
+				
+	 
+		<a class="tag-cont" href="/tags.html#algorithm-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">algorithm</div>
+			<div class="tag-r"></div>
+		</a>
+	 
+		<a class="tag-cont" href="/tags.html#leetcode-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">leetcode</div>
+			<div class="tag-r"></div>
+		</a>
+	 
+		<a class="tag-cont" href="/tags.html#c++-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">c++</div>
+			<div class="tag-r"></div>
+		</a>
+	 
+		<a class="tag-cont" href="/tags.html#DFS-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">DFS</div>
+			<div class="tag-r"></div>
+		</a>
+	
+
+
+
+				</div>
+			</div>
+		</div>
+		<div class="clearboth"></div>
+	</div>
+</div>
+	<div class="clearboth"></div>
+	
+
+
+  <!-- 多说评论框 start -->
+<div id="comments">
+    <div class="ds-thread" data-thread-key="/leetcode/2014/10/06/surrounded-regions"  data-title="Leetcode Surrounded Regions - Hombo's Blog"></div>
+</div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hombo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+	<div class="clearboth"></div>
+</div>
+
+			</div>
+			<div class="clearboth pagebottom"></div>
+		</div>
+	</div>
+    <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=5&amp;fs=4&amp;bgcolor=Orange"></script>
+
+	<footer>
+	<div class="footer-940">
+		<div class="footer-general-info">
+			© 2014 Hombo Wang.<br><br>
+			Content licensed under:<br>
+			<a class="cc" href="http://creativecommons.org/licenses/by-sa/3.0/">c a b</a><br>
+			<a href = "/about.html">About Me</a><br>
+		</div>
+		<div class="footer-col-cont">
+			<div class="footer-nav-col">
+				<h4><a>Categories</a></h4>
+				<ul>
+					
+					
+
+
+  
+     
+    	<li><a href="/categories.html#leetcode-ref">
+    		leetcode <span>4</span>
+    	</a></li>
+     
+    	<li><a href="/categories.html#algorithm-ref">
+    		algorithm <span>1</span>
+    	</a></li>
+     
+    	<li><a href="/categories.html#hosts-ref">
+    		hosts <span>1</span>
+    	</a></li>
+    
+  
+
+
+				</ul>
+			</div>
+			<div class="footer-nav-col">
+				<h4><a>Pages</a></h4>
+				<ul>
+					
+					
+					
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/about.html">About Me</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+    
+  
+
+
+
+				</ul>
+			</div>
+			<div class="footer-nav-col">
+				<h4><a>Feed</a></h4>
+				<ul>
+					<li><a href="/atom.xml">Atom Feed</a></li>
+					<li><a href="/rss.xml">RSS Feed</a></li>
+				</ul>
+			</div>
+			<div class="footer-nav-col">
+				<h4><a>Links</a></h4>
+				<ul>
+				 
+					<li><a href = "http://hombo.wang">Hombo's Blog</a></li>
+				
+				</ul>
+			</div>
+			<div class="footer-nav-col">
+				<h4><a href = "/about.html">About Me</a></h4>
+				<ul>
+				 
+					<li><a href = "mailto:wanghongbo@ict.ac.cn">e-mail</a></li>
+				 
+					<li><a href = "http://cn.linkedin.com/pub/hongbo-wang/70/4b0/921/">LinkedIn</a></li>
+				 
+					<li><a href = "https://github.com/kingmacrobo">Github</a></li>
+				 
+					<li><a href = "http://www.weibo.com/mbkg">WeiBo</a></li>
+				 
+					<li><a href = "http://blog.csdn.net/u013101828">CSDN</a></li>
+				
+				</ul>
+			</div>
+			<div class="clearboth"></div>
+		</div>
+		<div class="clearboth"></div>
+	</div>
+	<div class="clearboth"></div>
+</footer>
+	
+</body>
+</html>
+

@@ -1,0 +1,51 @@
+#code {
+    float: left;
+    color: #4D4D4C;
+    font-family: "Consolas", "Monaco", "Bitstream Vera Sans Mono", "Courier New";
+    font-size: 14px;
+    font-weight:bold;
+    padding-left: 120px;
+    padding-bottom: 30px;
+    line-height: 1.3;
+}
+
+#code .number{
+    color: #ae81ff;
+}
+
+#code .u{
+    color: red;
+}
+
+#code .b{
+    color: blue;
+}
+
+#code .p{
+    color: purple;
+}
+
+#code .string{
+    color: #ED9C28;
+}
+#code .value{
+    color: #080;
+}
+
+#code .keyword{
+    color: #F92672;
+    font-weight:bold;
+}
+
+#code .placeholder{
+    margin-left:30px;
+}
+
+#code .space{
+    margin-left:7px;
+}
+
+#code .comments{
+    color: #8E908C;
+    font-weight: normal;
+}
