@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	
-	<title>swap两个int指针指向的数</title>
+	<title>RoundedNetworkImageView</title>
     
 	
 	<meta name="author" content="Hombo Wang">
@@ -145,8 +145,8 @@
 				
 				<div class="journal-cat-box">
 
-<a href="/categories.html#algorithm-ref" title="algorithm">
-	algorithm
+<a href="/categories.html#android-ref" title="android">
+	android
 
 </a>
 </div>
@@ -154,112 +154,114 @@
 				</div>
 			</div>
 			<div class="journal-body">
-				<h1 class="journal-title">swap两个int指针指向的数<span class="author">by hombo</span>
+				<h1 class="journal-title">RoundedNetworkImageView<span class="author">by hombo</span>
 				</h1>
 				<span class="the-article">
-				<p>这是一道最近的面试题，感谢斌哥的奉献！
-题目是： 填写下面的函数，实现a和b指针指向的两个数的交换。</p>
-
-<pre><code>void swap(int *a , int *b){
-    a = ________ ;
-    b = ________ ;
-    a = ________ ;
-}
-</code></pre>
+				<p>将Volley的NetworkImageView的方形显示图片改为圆形显示，方法非常好，在此记录一下代码，方便自己和其他人今后使用！</p>
 
 <!--more-->
 
-<h2 id="section">分析:</h2>
+<h4 id="imageviewondrawgetcroppedbitmap">将方形改成圆形的核心思想是重写ImageView的onDraw和getCroppedBitmap两个方法。</h4>
 
-<p>我们知道对于两个数a,b的交换，如果不借助其他变量，也是可以实现的，方法有下面几种：</p>
+<p>代码如下：</p>
 
-<ul>
-  <li>用加减法:</li>
-</ul>
-
-<p>利用加减法的 <code>交换律</code> 和 <code>结合律</code></p>
-
-<pre><code>void swap(int a , int b){
-    a = a + b;
-    b = a - b; //b = a + b - b = a 
-    a = a - b; //a = a + b - a = b
+<pre><code>//  RoundedNetworkImageView
+ 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
+ 
+import com.android.volley.toolbox.NetworkImageView;
+ 
+ 
+public class RoundedNetworkImageView extends NetworkImageView {
+    private int borderColor = 0xffffffff;
+    private int borderWidth = 10;
+ 
+    public RoundedNetworkImageView(Context context) {
+        super(context);
+    }
+ 
+    public RoundedNetworkImageView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+ 
+    public RoundedNetworkImageView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
+ 
+    public void setBorderColor(int resourceID) {
+        borderColor = resourceID;
+    }
+ 
+    public void setBorderWidth(int border) {
+        borderWidth = border;
+    }
+ 
+    public int getBorderWidth() {
+        return borderWidth;
+    }
+ 
+    @Override
+    protected void onDraw(Canvas canvas) {
+        Drawable drawable = getDrawable();
+ 
+        if (drawable == null || getWidth() == 0 || getHeight() == 0)
+            return;
+ 
+        Bitmap b = ((BitmapDrawable) drawable).getBitmap();
+        if (b != null) {
+            Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+ 
+            int radius = (getWidth() &lt; getHeight()) ? getWidth() / 2 : getHeight() / 2;
+ 
+            Bitmap roundBitmap = getCroppedBitmap(bitmap, radius);
+            canvas.drawBitmap(roundBitmap, 0, 0, null);
+        }
+    }
+ 
+    public Bitmap getCroppedBitmap(Bitmap bmp, int radius) {
+        Bitmap scaledBmp = Bitmap.createScaledBitmap(bmp, radius * 2, radius * 2, false);
+        Bitmap output = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+ 
+        final Paint paint = new Paint();
+ 
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
+        paint.setDither(true);
+        canvas.drawARGB(0, 0, 0, 0);
+ 
+        // Draws a circle to create the border
+        paint.setColor(borderColor);
+        canvas.drawCircle(getWidth() / 2, getHeight() / 2, radius, paint);
+ 
+        // Draws the image subtracting the border width
+        BitmapShader s = new BitmapShader(scaledBmp, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        paint.setShader(s);
+        canvas.drawCircle(getWidth() / 2, getHeight() / 2, radius - borderWidth - 0.5f, paint);
+ 
+        return output;
+    }
 }
 </code></pre>
 
-<ul>
-  <li>用乘除法:</li>
-</ul>
-
-<p>注意，这个方法需要满足 <code>a*b != 0</code> </p>
-
-<pre><code>void swap(int a , int b){
-    a = a * b;
-    b = a / b; //b = a * b / b = a 
-    a = a / b; //a = a * b / a = b
-}
-</code></pre>
-
-<p>其实这个方法用到了乘除法的 <code>分配率</code></p>
-
-<ul>
-  <li>用异或运算：</li>
-</ul>
-
-<p>利用异或的性质: <code>交换律</code> , <code>结合律</code>  , <code>a ^ a = 0</code> , <code>0 ^ a = a</code> </p>
-
-<pre><code>void swap(int a , int b){
-    a = a ^ b;
-    b = a ^ b; //b = a ^ b ^ b = a ^ 0 = a 
-    a = a ^ b; //a = a ^ b ^ a = a ^ a ^ b = 0 ^ b = b
-}
-</code></pre>
-
-<p>而本题给的是指针，而且等式左边都是指针，也就是说没办法直接改变指针指向的内存位置的值，那怎么办呢？</p>
-
-<h2 id="section-1">解决方法:</h2>
-
-<p>虽然等式左边没有给出<a href="http://baike.baidu.com/view/836474.htm?fr=aladdin">左值</a>,但我们可以在等式右边加入左值，也就是说可以写成这种形式：</p>
-
-<pre><code>*a = *a + *b
-</code></pre>
-
-<p>为了不改变指针的值，还需要用点小技巧，就是用“,”来分割语句，可以写成下面这种形式：</p>
-
-<pre><code>a = (*a = *a + *b , a )
-</code></pre>
-
-<p>这是因为用“,”分割的语句，语句的返回值是最后一个子语句，这里就是a。现在应该明白了吧！那本题的一种解法如下：</p>
-
-<pre><code>void swap(int *a , int *b){
-    a = (*a = *a + *b , a);
-    b = (*b = *a - *b , b); //*b = *a + *b - *b = *a 
-    a = (*a = *a - *b , a); //*a = *a + *b - *a = *b
-}
-</code></pre>
-
-<p>也可以用乘除法和异或运算来实现，大同小异，这里不再给出。</p>
 
 				</span>
-				<div class="journal-date">Published 05 October 2014</div>
+				<div class="journal-date">Published 26 December 2014</div>
 				<div class="journal-tags">
 				
 				
 	 
-		<a class="tag-cont" href="/tags.html#algorithm-ref">
+		<a class="tag-cont" href="/tags.html#android-ref">
 			<div class="tag-l"></div>
-			<div class="tag-c">algorithm</div>
-			<div class="tag-r"></div>
-		</a>
-	 
-		<a class="tag-cont" href="/tags.html#point-ref">
-			<div class="tag-l"></div>
-			<div class="tag-c">point</div>
-			<div class="tag-r"></div>
-		</a>
-	 
-		<a class="tag-cont" href="/tags.html#c-ref">
-			<div class="tag-l"></div>
-			<div class="tag-c">c</div>
+			<div class="tag-c">android</div>
 			<div class="tag-r"></div>
 		</a>
 	
@@ -278,7 +280,7 @@
 
   <!-- 多说评论框 start -->
 <div id="comments">
-    <div class="ds-thread" data-thread-key="/algorithm/2014/10/05/swap-two-int"  data-title="swap两个int指针指向的数 - Hombo's Blog"></div>
+    <div class="ds-thread" data-thread-key="/android/2014/12/26/RoundedNetWorkImageView"  data-title="RoundedNetworkImageView - Hombo's Blog"></div>
 </div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->

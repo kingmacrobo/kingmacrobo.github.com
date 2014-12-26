@@ -11,6 +11,7 @@ http://hombo.wang/sitemap.txt
 http://hombo.wang/tags.html
 http://hombo.wang/2/index.html
 
+http://hombo.wang/android/2014/12/26/RoundedNetWorkImageView
 http://hombo.wang/leetcode/2014/10/10/unique-binary-search-tree
 http://hombo.wang/leetcode/2014/10/06/surrounded-regions
 http://hombo.wang/leetcode/2014/10/06/sum-root-to-leaf-numbers
