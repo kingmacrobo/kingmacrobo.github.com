@@ -4,13 +4,43 @@
  <title>Hombo's Blog</title>
  <link href="http://hombo.wang/" rel="self"/>
  <link href="http://hombo.wang"/>
- <updated>2014-12-28T13:06:13+08:00</updated>
+ <updated>2014-12-29T23:10:58+08:00</updated>
  <id>http://hombo.wang</id>
  <author>
    <name>Hombo Wang</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Fix the appcompat_v7 missing problem</title>
+   <link href="http://hombo.wang/android/2014/12/29/appcompat_v7-missing-problem"/>
+   <updated>2014-12-29T00:00:00+08:00</updated>
+   <id>http://hombo.wang/android/2014/12/29/appcompat_v7-missing-problem</id>
+   <content type="html">&lt;p&gt;在升级了最新版的android ADT后，发现没建立一个工程都会多出一个appcompat_v7的工程，很是奇怪，今天不小心把这个工程删除了，然后自己的工程就各种报错误，仔细看看错误一般是关于资源的，这是因为一些文件中用到appcompat_v7的一些资源，下面来说明如何更正这些文件，从而摆脱appcompat_v7。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h4 id=&quot;section&quot;&gt;第一步&lt;/h4&gt;
+&lt;p&gt;到工程的Properties中的Android项中，把Library中的关于appcompat_v7的引用remove掉。如下图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.stack.imgur.com/ncXPr.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;然后再将appcompat_v7工程给删除掉，这时你的工程会出现一些R资源未定义的错误，接下来的三步可以纠正这个错误。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-1&quot;&gt;第二步&lt;/h4&gt;
+&lt;p&gt;打开你的工程的res/values/styles.xml文件，将其中的&lt;code&gt;AppBaseTheme&lt;/code&gt;的&lt;code&gt;parent&lt;/code&gt;由&lt;code&gt;Theme.AppCompat.Light&lt;/code&gt; 改为&lt;code&gt;@android:style/Theme.Light&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;section-2&quot;&gt;第三步&lt;/h4&gt;
+&lt;p&gt;打开工程的res/values-v11/styles.xml文件，将其中的&lt;code&gt;AppBaseTheme&lt;/code&gt;的&lt;code&gt;parent&lt;/code&gt;由&lt;code&gt;Theme.AppCompat.Light&lt;/code&gt;改为&lt;code&gt;@android:style/Theme.Holo.Light&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;section-3&quot;&gt;第四步&lt;/h4&gt;
+&lt;p&gt;打开工程的rest/values-v14/styles.xml文件，将&lt;code&gt;AppBaseTheme&lt;/code&gt;的&lt;code&gt;parent&lt;/code&gt;由&lt;code&gt;Theme.AppCompat.Light.DarkActionBar&lt;/code&gt;改为&lt;code&gt;@android:style/Theme.Holo.Light.DarkActionBar&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;这样，在完成了一起上四个步骤后，就可以删除appcompat_v7了，重新编译自己的工程，应该可以正常运行。&lt;/p&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>Tabhost enable onResume</title>

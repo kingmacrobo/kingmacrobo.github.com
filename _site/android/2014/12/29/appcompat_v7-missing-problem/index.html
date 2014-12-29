@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	
-	<title>Sum Root to Leaf Numbers</title>
+	<title>Fix the appcompat_v7 missing problem</title>
     
 	
 	<meta name="author" content="Hombo Wang">
@@ -145,8 +145,8 @@
 				
 				<div class="journal-cat-box">
 
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
+<a href="/categories.html#android-ref" title="android">
+	android
 
 </a>
 </div>
@@ -154,97 +154,41 @@
 				</div>
 			</div>
 			<div class="journal-body">
-				<h1 class="journal-title">Sum Root to Leaf Numbers<span class="author">by hombo</span>
+				<h1 class="journal-title">Fix the appcompat_v7 missing problem<span class="author">by hombo</span>
 				</h1>
 				<span class="the-article">
-				<p>leetcode上比较简单的一道题了，一个二叉树，结点用0～9的数表示，让你求所有从根到叶的连起来的数的加和。</p>
+				<p>在升级了最新版的android ADT后，发现没建立一个工程都会多出一个appcompat_v7的工程，很是奇怪，今天不小心把这个工程删除了，然后自己的工程就各种报错误，仔细看看错误一般是关于资源的，这是因为一些文件中用到appcompat_v7的一些资源，下面来说明如何更正这些文件，从而摆脱appcompat_v7。</p>
 
 <!--more-->
 
-<h2 id="section">原文题目：</h2>
+<h4 id="section">第一步</h4>
+<p>到工程的Properties中的Android项中，把Library中的关于appcompat_v7的引用remove掉。如下图：</p>
 
-<p>Given a binary tree containing digits from <code>0-9</code> only, each <code>root-to-leaf</code> path could represent a number.</p>
+<p><img src="http://i.stack.imgur.com/ncXPr.png" alt="" /></p>
 
-<p>An example is the root-to-leaf path <code>1-&gt;2-&gt;3</code> which represents the number <code>123</code>.</p>
+<p>然后再将appcompat_v7工程给删除掉，这时你的工程会出现一些R资源未定义的错误，接下来的三步可以纠正这个错误。</p>
 
-<p>Find the total sum of all <code>root-to-leaf</code> numbers.</p>
+<h4 id="section-1">第二步</h4>
+<p>打开你的工程的res/values/styles.xml文件，将其中的<code>AppBaseTheme</code>的<code>parent</code>由<code>Theme.AppCompat.Light</code> 改为<code>@android:style/Theme.Light</code></p>
 
-<p>For example,</p>
+<h4 id="section-2">第三步</h4>
+<p>打开工程的res/values-v11/styles.xml文件，将其中的<code>AppBaseTheme</code>的<code>parent</code>由<code>Theme.AppCompat.Light</code>改为<code>@android:style/Theme.Holo.Light</code></p>
 
-<pre><code>    1
-   / \
-  2   3
-</code></pre>
+<h4 id="section-3">第四步</h4>
+<p>打开工程的rest/values-v14/styles.xml文件，将<code>AppBaseTheme</code>的<code>parent</code>由<code>Theme.AppCompat.Light.DarkActionBar</code>改为<code>@android:style/Theme.Holo.Light.DarkActionBar</code></p>
 
-<p>The root-to-leaf path <code>1-&gt;2</code> represents the number <code>12</code>.</p>
-
-<p>The root-to-leaf path <code>1-&gt;3</code> represents the number <code>13</code>.</p>
-
-<p>Return the <code>sum = 12 + 13 = 25</code>.</p>
-
-<h2 id="section-1">分析：</h2>
-
-<p>要想得到全部的root到leaf的值的总和，我们需要用一个全局的变量sum来保存加和的结果，并且需要父结点向儿子结点传递当前<code>前缀值</code>，做到这两点，用一次DFS就行了，只需要对树进行一次遍历即可，如果遍历到叶结点，就将这条路径值加到sum。</p>
-
-<p>AC的代码如下：</p>
-
-<pre><code>/**
- * Definition for binary tree
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
-class Solution {
-public:
-    int sum;
-    int sumNumbers(TreeNode *root) {
-        sum = 0;
-        if(root == NULL) return 0;
-        travel(root,0);
-        return sum;
-    }
-    void travel(TreeNode *node,int pre){
-        if(node-&gt;left == NULL &amp;&amp; node-&gt;right == NULL)
-            sum += pre*10+node-&gt;val;
-        else{
-            if(node-&gt;left != NULL) travel(node-&gt;left,pre*10+node-&gt;val);
-            if(node-&gt;right != NULL) travel(node-&gt;right,pre*10+node-&gt;val);
-        }
-    }
-};
-</code></pre>
+<p>这样，在完成了一起上四个步骤后，就可以删除appcompat_v7了，重新编译自己的工程，应该可以正常运行。</p>
 
 
 				</span>
-				<div class="journal-date">Published 06 October 2014</div>
+				<div class="journal-date">Published 29 December 2014</div>
 				<div class="journal-tags">
 				
 				
 	 
-		<a class="tag-cont" href="/tags.html#algorithm-ref">
+		<a class="tag-cont" href="/tags.html#android-ref">
 			<div class="tag-l"></div>
-			<div class="tag-c">algorithm</div>
-			<div class="tag-r"></div>
-		</a>
-	 
-		<a class="tag-cont" href="/tags.html#leetcode-ref">
-			<div class="tag-l"></div>
-			<div class="tag-c">leetcode</div>
-			<div class="tag-r"></div>
-		</a>
-	 
-		<a class="tag-cont" href="/tags.html#c++-ref">
-			<div class="tag-l"></div>
-			<div class="tag-c">c++</div>
-			<div class="tag-r"></div>
-		</a>
-	 
-		<a class="tag-cont" href="/tags.html#tree-ref">
-			<div class="tag-l"></div>
-			<div class="tag-c">tree</div>
+			<div class="tag-c">android</div>
 			<div class="tag-r"></div>
 		</a>
 	
@@ -263,7 +207,7 @@ public:
 
   <!-- 多说评论框 start -->
 <div id="comments">
-    <div class="ds-thread" data-thread-key="/leetcode/2014/10/06/sum-root-to-leaf-numbers"  data-title="Sum Root to Leaf Numbers - Hombo's Blog"></div>
+    <div class="ds-thread" data-thread-key="/android/2014/12/29/appcompat_v7-missing-problem"  data-title="Fix the appcompat_v7 missing problem - Hombo's Blog"></div>
 </div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
