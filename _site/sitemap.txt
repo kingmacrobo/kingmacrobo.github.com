@@ -10,7 +10,9 @@ http://hombo.wang/search.html
 http://hombo.wang/sitemap.txt
 http://hombo.wang/tags.html
 http://hombo.wang/2/index.html
+http://hombo.wang/3/index.html
 
+http://hombo.wang/android/2015/03/05/Volley-duplicated-post-with-slow-request
 http://hombo.wang/android/2014/12/29/appcompat_v7-missing-problem
 http://hombo.wang/android/2014/12/28/TabhostActivity-Enable-onResume
 http://hombo.wang/android/2014/12/26/RoundedNetWorkImageView

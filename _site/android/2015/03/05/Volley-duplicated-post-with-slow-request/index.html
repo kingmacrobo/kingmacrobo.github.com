@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	
-	<title>Longest Consecutive Sequence</title>
+	<title>Volley duplicated post with slow request</title>
     
 	
 	<meta name="author" content="Hombo Wang">
@@ -147,8 +147,8 @@
 				
 				<div class="journal-cat-box">
 
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
+<a href="/categories.html#android-ref" title="android">
+	android
 
 </a>
 </div>
@@ -156,108 +156,46 @@
 				</div>
 			</div>
 			<div class="journal-body">
-				<h1 class="journal-title">Longest Consecutive Sequence<span class="author">by hombo</span>
+				<h1 class="journal-title">Volley duplicated post with slow request<span class="author">by hombo</span>
 				</h1>
 				<span class="the-article">
-				<p>Given an unsorted array of integers, find the length of the longest consecutive elements sequence. For example,</p>
-
-<p>Given <code>[100, 4, 200, 1, 3, 2]</code>,</p>
-
-<p>The longest consecutive elements sequence is <code>[1, 2, 3, 4]</code>. Return its length: <code>4</code>.</p>
-
-<p>Your algorithm should run in <code>O(n)</code> complexity.</p>
-
-<p>此题可以用hashmap在<code>O(n)</code> 时间复杂度解决。</p>
+				<p>最近做一个android的项目，遇到一个比较奇怪的问题：使用volley框架向服务器post几张图片，也就是图片的上传，当图片比较多或者比较大的时候，发现会触发好多次相同的post，现在记录一下问题的原因和解决方法。</p>
 
 <!--more-->
 
-<p>一看是无需数组，又要求<code>O(n)</code>复杂度实现，很自然的可以想到用hashmap。</p>
+<h4 id="post">出现多次post的原因</h4>
+<p>volley的post有两个超时时间，一个是retry的阈值时间t1，一个是post的超时时间timeout，当post的超时时间timeout大于retry的阈值时间时，就会产生这种想象，也就是在第一个post由于传输量比较大而没有完成之前，产生了retry，也就会产生额外的post。</p>
 
-<p>具体方法就是将数组全部hash了，然后在对数组的每个元素进行一边查找，</p>
+<h4 id="section">解决方法1</h4>
+<p>既然retry会造成这种错误，在传输量比较大的时候，我们干脆就不用retry，禁止掉retry的方式是设置retry的阈值为0，代码如下：</p>
 
-<p>例如对于数组的第i个数，我们不断判断<code>num[i]+1</code>是否在hash表里，如果在说明数组存在比<code>num[i]</code>大1的数，然后继续判断<code>num[i]+2</code>……直到<code>num[i]+k</code>不再hash表里位置，在这个过程中需要记录长度。</p>
-
-<p>只用上面的算法不能保证是<code>O(n)</code>的，看下面的例子</p>
-
-<pre><code>数组是 `[7,6,5,4,3]`
-
-查找过程是： 
-
-7: `7`
-6: `6,7`
-5: `5,6,7`
-4: `4,5,6,7`
-3: `3,4,5,6,7`
+<pre><code>	postRequest.setRetryPolicy(new DefaultRetryPolicy(
+			0, //设置retry的时间阈值
+			DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+			DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 </code></pre>
 
-<p>显然复杂度最坏未为<code>O(n^2)</code>, 了保证算法是<code>O(n)</code>的，我们要用一些小技巧，让数组中已经被判断过的数不再去判断，其实很简单，就是加一个标示，表示这个数是否在前面的数里面判断过了，我们还可以将每次判断出来的长度存在这次判断最开始的那个数的hashmap中，这样下次如果加到这个数的时候，可以直接用这个长度值，而不需要往后遍历了，例如</p>
+<p>这种方式简单，但是禁止retry对功能上会产生一定的影响。</p>
 
-<pre><code>5: 5,6,7   把长度3存在hashmap : &lt;5,3&gt;
-4: 4,5,6,7 当4 上加到5的时候，可以从&lt;5,3&gt;直到5后面连续的长度是3，就不用再遍历了。
+<h4 id="section-1">解决方法2</h4>
+<p>修改retry的阈值时间，使它大于post的timeout时间，这种方式比较合理，一般的设置方法是将retry的阈值时间扩大到默认时间的k倍，k值视具体情况而定。代码如下：</p>
+
+<pre><code>	postRequest.setRetryPolicy(new DefaultRetryPolicy(
+			DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * k,
+			DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+			DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 </code></pre>
-
-<p>这样就可以保证算法是O(n)的了，空间复杂度是hash表大小。</p>
-
-<p>AC代码如下：</p>
-
-<pre><code>class Solution {
-public:
-    int longestConsecutive(vector&lt;int&gt; &amp;num) {
-        unordered_map&lt;int,int&gt; hash;
-        int max = 0,count,j;
-        unordered_map&lt;int,int&gt;::iterator it;
-        for(int i = 0 ; i &lt; num.size(); ++i) hash.insert({num[i],-1});
-        for(int i = 0 ; i &lt; num.size(); ++i){
-            if(hash.find(num[i])-&gt;second!=-1) continue;
-            count = 1;
-            j = num[i]+1;
-            while((it=hash.find(j++))!=hash.end()){
-                if(it-&gt;second &gt; 0){
-                    count += it-&gt;second;
-                    break;
-                }
-                it-&gt;second = 0;
-                ++count;
-            }
-            hash.find(num[i])-&gt;second = count;
-            if(max &lt; count) max = count;
-        }
-        return max;
-    }
-    
-};
-</code></pre>
-
-<p>另外，还有一种算法是同时从num[i]的两边不断判断，并标记已经判断过的的数，这种方法可以省去一些长度的记录。</p>
 
 
 				</span>
-				<div class="journal-date">Published 06 October 2014</div>
+				<div class="journal-date">Published 05 March 2015</div>
 				<div class="journal-tags">
 				
 				
 	 
-		<a class="tag-cont" href="/tags.html#leetcode-ref">
+		<a class="tag-cont" href="/tags.html#android-ref">
 			<div class="tag-l"></div>
-			<div class="tag-c">leetcode</div>
-			<div class="tag-r"></div>
-		</a>
-	 
-		<a class="tag-cont" href="/tags.html#algorithm-ref">
-			<div class="tag-l"></div>
-			<div class="tag-c">algorithm</div>
-			<div class="tag-r"></div>
-		</a>
-	 
-		<a class="tag-cont" href="/tags.html#c++-ref">
-			<div class="tag-l"></div>
-			<div class="tag-c">c++</div>
-			<div class="tag-r"></div>
-		</a>
-	 
-		<a class="tag-cont" href="/tags.html#hash-ref">
-			<div class="tag-l"></div>
-			<div class="tag-c">hash</div>
+			<div class="tag-c">android</div>
 			<div class="tag-r"></div>
 		</a>
 	
@@ -276,7 +214,7 @@ public:
 
   <!-- 多说评论框 start -->
 <div id="comments">
-    <div class="ds-thread" data-thread-key="/leetcode/2014/10/06/longest-consecutive-sequence"  data-title="Longest Consecutive Sequence - Hombo's Blog"></div>
+    <div class="ds-thread" data-thread-key="/android/2015/03/05/Volley-duplicated-post-with-slow-request"  data-title="Volley duplicated post with slow request - Hombo's Blog"></div>
 </div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
