@@ -4,13 +4,94 @@
  <title>Hombo's Blog</title>
  <link href="http://hombo.wang/" rel="self"/>
  <link href="http://hombo.wang"/>
- <updated>2015-03-08T09:40:43+08:00</updated>
+ <updated>2015-03-09T17:35:19+08:00</updated>
  <id>http://hombo.wang</id>
  <author>
    <name>Hombo Wang</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Latex中加入空格</title>
+   <link href="http://hombo.wang/latex/2015/03/09/Latex-Spacing"/>
+   <updated>2015-03-09T00:00:00+08:00</updated>
+   <id>http://hombo.wang/latex/2015/03/09/Latex-Spacing</id>
+   <content type="html">&lt;p&gt;Latex中的空格符”“在编译的过程中会被忽略，在做自己简历的过程中，遇到了两种需要加空格的情况：一种是在句子中间加空格，另一种是在行首加空格，下面记录一下这两种加空格的方法。&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;句子中的空格&lt;/h3&gt;
+
+&lt;p&gt;方法很简单，就是用”\ “来表示一个空格，需要多少空格就加多少个”\ “，需要注意的是连续的两个‘\’表示的是回车换行（“\”），下面举一个代码例子：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;\cvitem{2013.9--2016.7}{\ \ \ 中国科学院\ \ \ \ \ \ \ 计算技术研究所\ \ \ \ \ \ \ \ \ \ \ \ \ 硕士} 
+\cvitem{2009.9--2013.7}{\ \ \ 华中科技大学\ \ \ \ 计算机科学与技术学院\ \ \  \ 学士}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;行首的空格&lt;/h3&gt;
+
+&lt;p&gt;行首不能直接用上面的方法来加入空格，因为也会被编译器忽略掉，在行首加入空格的方式是用&lt;code&gt;\hspace&lt;/code&gt;，举个列子：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;\cvitem{2013.9--2016.7}{\ \ \ 中国科学院\ \ \ \ \ \ \ 计算技术研究所\ \ \ \ \ \ \ \ \ \ \ \ \ 硕士} 
+\cvitem{2009.9--2013.7}{\ \ \ 华中科技大学\ \ \ \ 计算机科学与技术学院\ \ \  \ 学士}
+\hspace{19ex}{GPA:  3.91\ \ \ \ \ \ \ \ \ 年级排名:  4/350} 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;其它加空格的方法&lt;/h3&gt;
+
+&lt;p&gt;下面是一些加空格的方法的总结：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;\documentclass{article}
+\begin{document}
+
+\noindent
+There are a number of horizontal spacing macros for LaTeX:
+
+\noindent\begin{tabular}{lp{5cm}}
+  \verb|a\,b| &amp;amp; a\,b \\
+  \verb|$a\,b$| &amp;amp; $a\,b$ \\
+  \verb|a\thinspace b| &amp;amp; a\thinspace b \\
+  \verb|$a\thinspace b$| &amp;amp; $a\thinspace b$ \\
+  \verb|$a\!b$| &amp;amp; $a\!b$ \\
+  \verb|$a\mkern-\thinmuskip b$| &amp;amp; $a\mkern-\thinmuskip b$ \\
+  \verb|$a\&amp;gt;b$| &amp;amp; $a\&amp;gt;b$ \\
+  \verb|$a\mkern\medmuskip b$| &amp;amp; $a\mkern\medmuskip b$ \\
+  \verb|$a\;b$| &amp;amp; $a\;b$ \\
+  \verb|$a\mkern\thickmuskip b$| &amp;amp; $a\mkern\thickmuskip b$ \\
+  \verb|$a\:b$| &amp;amp; $a\:b$ \\
+  \verb|$a\mkern\medmuskip b$| &amp;amp; $a\mkern\medmuskip b$ \\
+  \verb|a\enspace b| &amp;amp; a\enspace b \\
+  \verb|$a\enspace b$| &amp;amp; $a\enspace b$ \\
+  \verb|a\quad b| &amp;amp; a\quad b \\
+  \verb|$a\quad b$| &amp;amp; $a\quad b$ \\
+  \verb|a\qquad b| &amp;amp; a\qquad b \\
+  \verb|$a\qquad b$| &amp;amp; $a\qquad b$ \\
+  \verb|a\hskip 1em b| &amp;amp; a\hskip 1em b \\
+  \verb|$a\hskip 1em b$| &amp;amp; $a\hskip 1em b$ \\
+  \verb|a\kern 1pc b| &amp;amp; a\kern 1pc b \\
+  \verb|$a\kern 1pc b$| &amp;amp; $a\kern 1pc b$ \\
+  \verb|a\hspace{35pt}b| &amp;amp; a\hspace{35pt}b \\
+  \verb|$a\hspace{35pt}b$| &amp;amp; $a\hspace{35pt}b$ \\
+  \verb|axyzb| &amp;amp; axyzb \\
+  \verb|a\hphantom{xyz}b| &amp;amp; a\hphantom{xyz}b \\
+  \verb|$axyzb$| &amp;amp; $axyzb$ \\
+  \verb|$a\hphantom{xyz}b$| &amp;amp; $a\hphantom{xyz}b$ \\
+  \verb|a\ b| &amp;amp; a\ b \\
+  \verb|$a\ b$| &amp;amp; $a\ b$ \\
+  \verb|a~b| &amp;amp; a~b \\
+  \verb|$a~b$| &amp;amp; $a~b$ \\
+  \verb|a\hfill b| &amp;amp; a\hfill b \\
+  \verb|$a\hfill b$| &amp;amp; $a\hfill b$
+\end{tabular}
+\end{document}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;结果如下图：
+&lt;img src=&quot;http://i.stack.imgur.com/BQKUF.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>在onCreate中获取控件尺寸的方法</title>
