@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	
-	<title>Latex中加入空格</title>
+	<title>Java 八种基本数据类型的表示范围</title>
     
 	
 	<meta name="author" content="Hombo Wang">
@@ -147,8 +147,8 @@
 				
 				<div class="journal-cat-box">
 
-<a href="/categories.html#latex-ref" title="latex">
-	latex
+<a href="/categories.html#java-ref" title="java">
+	java
 
 </a>
 </div>
@@ -156,92 +156,99 @@
 				</div>
 			</div>
 			<div class="journal-body">
-				<h1 class="journal-title">Latex中加入空格<span class="author">by hombo</span>
+				<h1 class="journal-title">Java 八种基本数据类型的表示范围<span class="author">by hombo</span>
 				</h1>
 				<span class="the-article">
-				<p>Latex中的空格符” “在编译的过程中会被忽略，在做自己简历的过程中，遇到了两种需要加空格的情况：一种是在句子中间加空格，另一种是在行首加空格，下面记录一下这两种加空格的方法。</p>
+				<p>Java语言提供了八种基本类型。六种数字类型（四个整数型，两个浮点型），一种字符类型，还有一种布尔型。这几种基本类型的表示范围容易混淆，例如int和long的表示范围。下面对着八种类型进行区分：</p>
 
 <!--more-->
 
-<h3 id="section">句子中的空格</h3>
+<h3 id="byte">byte</h3>
 
-<p>方法很简单，就是用”\ “来表示一个空格，需要多少空格就加多少个”\ “，需要注意的是连续的两个‘\’表示的是回车换行（“\”），下面举一个代码例子：</p>
-
-<pre><code>\cvitem{2013.9--2016.7}{\ \ \ 中国科学院\ \ \ \ \ \ \ 计算技术研究所\ \ \ \ \ \ \ \ \ \ \ \ \ 硕士} 
-\cvitem{2009.9--2013.7}{\ \ \ 华中科技大学\ \ \ \ 计算机科学与技术学院\ \ \  \ 学士}
+<pre><code>· byte数据类型是8位、有符号的，以二进制补码表示的整数；
+· 最小值是-128（-2^7）；
+· 最大值是127（2^7-1）；
+· 默认值是0；
+· byte类型用在大型数组中节约空间，主要代替整数，因为byte变量占用的空间只有int类型的四分之一；
+  例子：byte a = 100，byte b = -50。
 </code></pre>
 
-<h3 id="section-1">行首的空格</h3>
+<h3 id="short">short</h3>
 
-<p>行首不能直接用上面的方法来加入空格，因为也会被编译器忽略掉，在行首加入空格的方式是用<code>\hspace</code>，举个列子：</p>
-
-<pre><code>\cvitem{2013.9--2016.7}{\ \ \ 中国科学院\ \ \ \ \ \ \ 计算技术研究所\ \ \ \ \ \ \ \ \ \ \ \ \ 硕士} 
-\cvitem{2009.9--2013.7}{\ \ \ 华中科技大学\ \ \ \ 计算机科学与技术学院\ \ \  \ 学士}
-\hspace{19ex}{GPA:  3.91\ \ \ \ \ \ \ \ \ 年级排名:  4/350} 
+<pre><code>· short数据类型是16位、有符号的以二进制补码表示的整数
+· 最小值是-32768（-2^15）；
+· 最大值是32767（2^15 - 1）；
+· Short数据类型也可以像byte那样节省空间。一个short变量是int型变量所占空间的二分之一；
+· 默认值是0；
+· 例子：short s = 1000，short r = -20000。
 </code></pre>
 
-<h3 id="section-2">其它加空格的方法</h3>
+<h3 id="int">int</h3>
 
-<p>下面是一些加空格的方法的总结：</p>
-
-<pre><code>\documentclass{article}
-\begin{document}
-
-\noindent
-There are a number of horizontal spacing macros for LaTeX:
-
-\noindent\begin{tabular}{lp{5cm}}
-  \verb|a\,b| &amp; a\,b \\
-  \verb|$a\,b$| &amp; $a\,b$ \\
-  \verb|a\thinspace b| &amp; a\thinspace b \\
-  \verb|$a\thinspace b$| &amp; $a\thinspace b$ \\
-  \verb|$a\!b$| &amp; $a\!b$ \\
-  \verb|$a\mkern-\thinmuskip b$| &amp; $a\mkern-\thinmuskip b$ \\
-  \verb|$a\&gt;b$| &amp; $a\&gt;b$ \\
-  \verb|$a\mkern\medmuskip b$| &amp; $a\mkern\medmuskip b$ \\
-  \verb|$a\;b$| &amp; $a\;b$ \\
-  \verb|$a\mkern\thickmuskip b$| &amp; $a\mkern\thickmuskip b$ \\
-  \verb|$a\:b$| &amp; $a\:b$ \\
-  \verb|$a\mkern\medmuskip b$| &amp; $a\mkern\medmuskip b$ \\
-  \verb|a\enspace b| &amp; a\enspace b \\
-  \verb|$a\enspace b$| &amp; $a\enspace b$ \\
-  \verb|a\quad b| &amp; a\quad b \\
-  \verb|$a\quad b$| &amp; $a\quad b$ \\
-  \verb|a\qquad b| &amp; a\qquad b \\
-  \verb|$a\qquad b$| &amp; $a\qquad b$ \\
-  \verb|a\hskip 1em b| &amp; a\hskip 1em b \\
-  \verb|$a\hskip 1em b$| &amp; $a\hskip 1em b$ \\
-  \verb|a\kern 1pc b| &amp; a\kern 1pc b \\
-  \verb|$a\kern 1pc b$| &amp; $a\kern 1pc b$ \\
-  \verb|a\hspace{35pt}b| &amp; a\hspace{35pt}b \\
-  \verb|$a\hspace{35pt}b$| &amp; $a\hspace{35pt}b$ \\
-  \verb|axyzb| &amp; axyzb \\
-  \verb|a\hphantom{xyz}b| &amp; a\hphantom{xyz}b \\
-  \verb|$axyzb$| &amp; $axyzb$ \\
-  \verb|$a\hphantom{xyz}b$| &amp; $a\hphantom{xyz}b$ \\
-  \verb|a\ b| &amp; a\ b \\
-  \verb|$a\ b$| &amp; $a\ b$ \\
-  \verb|a~b| &amp; a~b \\
-  \verb|$a~b$| &amp; $a~b$ \\
-  \verb|a\hfill b| &amp; a\hfill b \\
-  \verb|$a\hfill b$| &amp; $a\hfill b$
-\end{tabular}
-\end{document}
+<pre><code>· int数据类型是32位、有符号的以二进制补码表示的整数；
+· 最小值是-2,147,483,648（-2^31）；
+· 最大值是2,147,485,647（2^31 - 1）；
+· 一般地整型变量默认为int类型；
+· 默认值是0；
+· 例子：int a = 100000, int b = -200000。
 </code></pre>
 
-<p>结果如下图：
-<img src="http://i.stack.imgur.com/BQKUF.png" alt="" /></p>
+<h3 id="long">long</h3>
+
+<pre><code>· long数据类型是64位、有符号的以二进制补码表示的整数；
+· 最小值是-9,223,372,036,854,775,808（-2^63）；
+· 最大值是9,223,372,036,854,775,807（2^63 -1）；
+· 这种类型主要使用在需要比较大整数的系统上；
+· 默认值是0L；
+· 例子： long a = 100000L，int b = -200000L。
+</code></pre>
+
+<h3 id="float">float</h3>
+
+<pre><code>· float数据类型是单精度、32位、符合IEEE 754标准的浮点数；
+· float在储存大型浮点数组的时候可节省内存空间；
+· 默认值是0.0f；
+· 浮点数不能用来表示精确的值，如货币；
+· 例子：float f1 = 234.5f。
+</code></pre>
+
+<h3 id="double">double</h3>
+
+<pre><code>· double数据类型是双精度、64位、符合IEEE 754标准的浮点数；
+· 浮点数的默认类型为double类型；
+· double类型同样不能表示精确的值，如货币；
+· 默认值是0.0f；
+· 例子：double d1 = 123.4。
+</code></pre>
+
+<h3 id="boolean">boolean</h3>
+
+<pre><code>· boolean数据类型表示一位的信息；
+· 只有两个取值：true和false；
+· 这种类型只作为一种标志来记录true/false情况；
+· 默认值是false；
+· 例子：boolean one = true。
+</code></pre>
+
+<h3 id="char">char</h3>
+
+<pre><code>· char类型是一个单一的16位Unicode字符；
+· 最小值是’\u0000’（即为0）；
+· 最大值是’\uffff’（即为65,535）；
+· char数据类型可以储存任何字符；
+· 例子：char letter = ‘A’。
+</code></pre>
 
 
 				</span>
-				<div class="journal-date">Published 09 March 2015</div>
+				<div class="journal-date">Published 10 March 2015</div>
 				<div class="journal-tags">
 				
 				
 	 
-		<a class="tag-cont" href="/tags.html#Latex-ref">
+		<a class="tag-cont" href="/tags.html#Java-ref">
 			<div class="tag-l"></div>
-			<div class="tag-c">Latex</div>
+			<div class="tag-c">Java</div>
 			<div class="tag-r"></div>
 		</a>
 	
@@ -260,7 +267,7 @@ There are a number of horizontal spacing macros for LaTeX:
 
   <!-- 多说评论框 start -->
 <div id="comments">
-    <div class="ds-thread" data-thread-key="/latex/2015/03/09/Latex-Spacing"  data-title="Latex中加入空格 - Hombo's Blog"></div>
+    <div class="ds-thread" data-thread-key="/java/2015/03/10/Java-base-type-range"  data-title="Java 八种基本数据类型的表示范围 - Hombo's Blog"></div>
 </div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
