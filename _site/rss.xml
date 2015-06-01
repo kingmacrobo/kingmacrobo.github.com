@@ -5,10 +5,97 @@
         <description>Hombo's Blog - Hombo Wang</description>
         <link>http://hombo.wang</link>
         <link>http://hombo.wang</link>
-        <lastBuildDate>2015-06-01T23:06:59+08:00</lastBuildDate>
-        <pubDate>2015-06-01T23:06:59+08:00</pubDate>
+        <lastBuildDate>2015-06-01T23:31:48+08:00</lastBuildDate>
+        <pubDate>2015-06-01T23:31:48+08:00</pubDate>
         <ttl>1800</ttl>
 
+
+        <item>
+                <title>Spiral Matrix</title>
+                <description>&lt;p&gt;对矩阵的访问花样很多，例如矩阵分别按行列排好序，然后进行查找；又比如矩阵的旋转，可以旋转90度，旋转180等等。而本题也很有趣，需要按顺时针螺旋的方式访问矩阵，并将1，2，3…..n^2，填入螺旋访问过程中的每个点。&lt;/p&gt;
+
+&lt;p&gt;这个问题的关键在于如何实现螺旋遍历？&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;顺时针螺旋遍历的实现&lt;/h3&gt;
+
+&lt;p&gt;遇到这种问题，我们可以从几个简单的例子中寻找规律：&lt;/p&gt;
+
+&lt;p&gt;对于一个3×3的矩阵：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1 2 3
+8 9 4
+7 6 5
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们看到它会有2圈的回旋，&lt;/p&gt;
+
+&lt;p&gt;对于一个4×4的矩阵，&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1   2   3   4
+12  13  14  5
+11  16  15  6
+10  9   8   7
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;它会有2圈的回旋，&lt;/p&gt;
+
+&lt;p&gt;而对于一个5×5的矩阵，&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1   2   3   4   5
+16  17  18  19  6
+15  24  25  20  7
+14  23  22  21  8
+13  20  11  10  9
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;它会有3圈的回旋，&lt;/p&gt;
+
+&lt;p&gt;如果继续下去，我们可以发现如果n为奇数，那么有&lt;code&gt;(n+1)/2&lt;/code&gt;次回旋，如果n为偶数，那么有&lt;code&gt;n/2&lt;/code&gt;次循环，因为n为偶数，所以&lt;code&gt;n/2 = (n+1)/2&lt;/code&gt;， 所以，对于n×n的矩阵，有&lt;code&gt;(n+1)/2&lt;/code&gt;次回旋。&lt;/p&gt;
+
+&lt;p&gt;由此，我们已经找到规律，接下来就是实现了，我们只需要进行&lt;code&gt;(n+1)/2&lt;/code&gt;次操作，每次操作都是按顺时针访问一圈。&lt;/p&gt;
+
+&lt;p&gt;如果我们定义当前访问的圈为第k圈，则我们可以很容易的定位这个圈的四个&lt;code&gt;角&lt;/code&gt;，&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;左上 (k,k)
+右上 (k,n-k-1)
+左下 (n-k-1,k)
+右下 (n-k-1,n-k-1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;后面的操作就很简单了，就是按顺时针的顺序，遍历这四个点标示的行和列，但是需要注意的是不能够重复遍历相同的位置。&lt;/p&gt;
+
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] spiral = new int[n][n];
+        int val = 1;
+        for (int k = 0; k &amp;lt; (n+1)/2; ++k) {
+            for (int i = k; i &amp;lt; n-k; ++i) {
+                spiral[k][i] = val++;
+            }
+            for (int i = k+1; i &amp;lt; n-k; ++i) {
+                spiral[i][n-k-1] = val++;
+            }
+            for (int i = n-k-2; i &amp;gt;= k &amp;amp;&amp;amp; k &amp;lt; n-k-1; --i) {
+                spiral[n-k-1][i] = val++;
+            }
+            for (int i = n-k-2; i &amp;gt;= k+1 &amp;amp;&amp;amp; k &amp;lt; n-k-1; --i) {
+                spiral[i][k] = val++;
+            }
+        }
+        return spiral;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+</description>
+                <link>http://hombo.wang/leetcode/2015/06/01/Spiral-Matrix</link>
+                <guid>http://hombo.wang/leetcode/2015/06/01/Spiral-Matrix</guid>
+                <pubDate>2015-06-01T00:00:00+08:00</pubDate>
+        </item>
 
         <item>
                 <title>Merge Intervals</title>
