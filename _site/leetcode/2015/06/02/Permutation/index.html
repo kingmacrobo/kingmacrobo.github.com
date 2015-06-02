@@ -1,0 +1,668 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	
+	<title>Permutation</title>
+    
+	
+	<meta name="author" content="Hombo Wang">
+	
+	<link rel="stylesheet" href="/assets/themes/Snail/css/jquery.fancybox.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/main.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/pages/journal.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/team.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/static.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/css/errors.css">
+	<link rel="stylesheet" href="/assets/themes/Snail/google-code-prettify/prettify.css">
+	
+	<link rel="shortcut icon" href="/assets/themes/Snail/img/favicon.ico">
+	
+	<script type="text/javascript" src="/assets/themes/Snail/js/jquery.min.js"></script>
+	
+	<script type="text/javascript" src="/assets/themes/Snail/js/auto_loadmore.js"></script>
+	
+	<script type="text/javascript" src="/assets/themes/Snail/google-code-prettify/prettify.js"></script>
+	
+	<script type="text/javascript">
+	  $(function(){
+		$("pre code").addClass("prettyprint linenums");
+		prettyPrint();
+	  });
+	</script>
+	
+<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+</head>
+<body>
+	<noscript>
+		&amp;lt;div id="no-js"&amp;gt;Please enable JavaScript in your browser to experience / fully&amp;lt;/div&amp;gt;
+	</noscript>
+    <div id="page-container">
+		<div>
+            <div style="margin:2px 0px 2px 805px;width:340px; height:25px;">
+                <img src="http://counter6.statcounterfree.com/private/freecounterstat.php?c=586cbed92fda4763cc77bf3587fbe134" border="0" title="free website counter" alt="free website counter"></td>
+
+            </div>
+			<nav>
+	<div id="nav-l">
+	</div>
+	<div id="nav-c">
+		<ul id="nav-list" style="width: 700px;">
+			<li id="home"><a href="/">Home</a></li>
+			
+			
+			
+				
+				  
+				
+			 
+				
+				  
+					
+					<li id = "About Me"><a href="/about.html">About Me</a></li>
+					
+				  
+				
+			 
+				
+				  
+					
+					<li id = "Archive"><a href="/archive.html">Archive</a></li>
+					
+				  
+				
+			 
+				
+				  
+				
+			 
+				
+				  
+					
+					<li id = "Categories"><a href="/categories.html">Categories</a></li>
+					
+				  
+				
+			 
+				
+			 
+				
+				  
+				
+			 
+				
+				  
+				
+			 
+				
+				  
+				
+			 
+				
+				  
+					
+					<li id = "Tags"><a href="/tags.html">Tags</a></li>
+					
+				  
+				
+			 
+				
+			 
+				
+			 
+				
+			 
+			
+			
+		</ul>
+		<form id="nav-search" method="GET" action="/search.html">
+			<div id="search-right-pix">
+				<div id="search-left-pix">
+					<div id="search-center-pix">
+						<div id="search-icon-pix"></div>
+						<input name="query" type="text" placeholder="Search">
+					</div>
+				</div>
+			</div>
+		</form>
+		
+		
+	</div>
+	<div id="nav-r">
+	</div>
+</nav>
+			<div id="page-content">
+				
+<div id="page-content">
+	<div class="cont932">
+	<div id="journal-articles-block">
+		<div class="journal-article">
+			<div class="journal-post-info">
+				<div class="journal-cat-box">
+				
+				
+				<div class="journal-cat-box">
+
+<a href="/categories.html#leetcode-ref" title="leetcode">
+	leetcode
+
+</a>
+</div>
+				
+				</div>
+			</div>
+			<div class="journal-body">
+				<h1 class="journal-title">Permutation<span class="author">by hombo</span>
+				</h1>
+				<span class="the-article">
+				<p>leetcode上有四道关于排列的题，分别是：Next Permutation， Permutations， Permutations II 和 Permutation Sequence。对于Next Permutation和Permutation Sequence， 都是关于排列的字母序的，基本思想类似。对于Permutations和Permutations II，差别只是在于是否有重复的元素，有重复元素的实现会涉及到组合问题，比较棘手。</p>
+
+<!--more-->
+
+<h3 id="section">什么是排列的字母序</h3>
+<p>这里的字母序和字符串比较的字母序一样，例如123的排列按字母顺序为：</p>
+
+<pre><code>123
+132
+213
+231
+312
+321
+</code></pre>
+
+<h3 id="next-permutation">Next Permutation</h3>
+
+<p>Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.</p>
+
+<p>If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).</p>
+
+<p>The replacement must be in-place, do not allocate extra memory.</p>
+
+<p>Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.</p>
+
+<pre><code>1,2,3 → 1,3,2
+3,2,1 → 1,2,3
+1,1,5 → 1,5,1
+</code></pre>
+
+<p>其实就是找出给出的排列在字母序中的下一个排列。</p>
+
+<p>首先我们需要寻找规律，两个相邻的排列是怎么转换得到的？</p>
+
+<pre><code>1,2,3 -&gt; 1,3,2 交换2 和 3
+1,2,4,5,3 -&gt; 1,2,5,3,4 交换4和5，然后交换3和4
+1,2,4,6,5,3 -&gt; 1,2,5,3,4,6 交换4和6，然后对后面进行从小到大排序！
+1,2,4,7,6,5,3 -&gt; 1,2,5,3,4,6,7 交换4和5，然后对后面从小到大排序！
+</code></pre>
+
+<p>至此，我们应该是能发现规律了：</p>
+
+<pre><code>从右边开始往左找，找到第一个后面数大于前面数的位置，然后往后找到最后一个比前面数大的位置，交换两个数，然后将后面的所有数进行从小到大排序！
+</code></pre>
+
+<p>我们从理论上分析上面做法的正确性：</p>
+
+<p>如果对于排列P，想找到它的相邻的下一个排列，那么由于是字母序的，所以我们要尽可能的在右边做交换，又由于想要增大字母序，必须将一个大的数和它左边比它小的数进行交换，因此我们从右边开始往左找，也就是说，这两个要交换的数尽量考右，而上面的找法，先找到了左边比右边小的位置，不放设左边为l，右边为r，然后再从r开始尽量往右找（尽量小），找到最后一个大于l的数m，交换m和l，这样将m换到l的位置后，不管l后面的数怎么变化，都比排列P要大，而我们想要的是大一个的排列，那我们就需要将l之后的排列的字母序设置为最小，也就是需要对l之后的数进行从小到大的排序。</p>
+
+<p>思想就是这样，代码如下：</p>
+
+<pre><code>public class Solution {
+    public void nextPermutation(int[] nums) {
+        int length = nums.length;
+        for (int i = length-1 ; i &gt;= 0 ; --i) {
+            if (i &gt; 0 &amp;&amp; nums[i] &gt; nums[i-1]) {
+                int j = i;
+                while (j &lt; nums.length &amp;&amp; nums[j] &gt; nums[i-1]) ++j;
+                --j;
+                int temp = nums[j];
+                nums[j] = nums[i-1];
+                nums[i-1] = temp;
+                sort(nums,i);
+                return ;
+            }
+        }
+        sort(nums,0);
+    }
+    public void sort(int[] nums, int index) {
+        int start = index, end = nums.length -1;
+        while(start&lt;end) {
+            int temp = nums[start];
+            nums[start++] = nums[end];
+            nums[end--] = temp;
+        }
+    }
+}
+</code></pre>
+
+<p>时间复杂度是O(n), 空间是O(1).</p>
+
+<h3 id="permutation-sequence">Permutation Sequence</h3>
+
+<p>The set [1,2,3,…,n] contains a total of n! unique permutations.</p>
+
+<p>By listing and labeling all of the permutations in order,</p>
+
+<p>We get the following sequence (ie, for n = 3):</p>
+
+<pre><code>"123"
+"132"
+"213"
+"231"
+"312"
+"321"
+</code></pre>
+
+<p>Given n and k, return the kth permutation sequence.</p>
+
+<p>Note: Given n will be between 1 and 9 inclusive.</p>
+
+<p>这道题是上一题的加强版，本题要求找到按字母序排序的第k个排列。</p>
+
+<p>比较暴力的解法是：利用前面的Next Permutation，从第一个排列开始，不断的往后找，直到找到第k个排列。这样的时间复杂度很大为O(kn), 我们需要一种O(n)的解法！</p>
+
+<p>我们可以利用不断定位的方式在O(n)时间内求解。</p>
+
+<p>m个数的排列有m!种，如果 (m-1)! &lt; k &lt;= m!我们就可以直接定位到第k个排列是从第几个数开始分析的，也就是说前面有n-m个数我们是可以确定的，他们就是1,2,3,…,n-m.</p>
+
+<p>定位到一个位置之后，我们可以算出k里面有多少个(m-1)!，假如有l个，然后选择后面的数中第l+1小的数放到此位置，然后令k = k - (m-1)! * l, 至此后面的问题就变成了一个子问题，我们可以用递归来解决，代码如下：</p>
+
+<pre><code>// recursive method
+// Directly locate the position by comparing k with i!
+// Time complexity is O(n), space is O(n) since we used the recursive method.
+
+public class Solution {
+	public String getPermutation(int n, int k) {
+		StringBuilder sb = new StringBuilder();
+		List&lt;Integer&gt; nums = new LinkedList&lt;Integer&gt;();
+		for (int i = 1; i &lt;= n; ++i)
+			nums.add(i);
+		deal(nums, k, sb);
+		return sb.toString();
+	}
+
+	public void deal(List&lt;Integer&gt; nums, int k, StringBuilder sb) {
+		if (k == 1) {
+			for (Integer in : nums)
+				sb.append(in);
+			return;
+		}
+		int mul = 1, i;
+		for (i = 1; i &lt;= nums.size(); ++i) {
+			mul *= i;
+			if (mul &gt;= k)
+				break;
+		}
+		int size = nums.size();
+		for (int w = 0; w &lt; size - i; ++w) {
+			sb.append(nums.get(0));
+			nums.remove(0);
+		}
+		if (mul == k) {
+			for (int j = nums.size() - 1; j &gt;= 0; --j)
+				sb.append(nums.get(j));
+			return;
+		}
+		mul /= i;
+		int cur = k / mul;
+		if (k % mul == 0) {
+			sb.append(nums.get(cur-1));
+			nums.remove(cur-1);
+			for (int w = nums.size()-1; w &gt;=0; --w)
+				sb.append(nums.get(w));
+			return;
+		}
+		sb.append(nums.get(cur));
+		nums.remove(cur);
+		deal(nums, k - cur * mul, sb);
+	}
+}
+</code></pre>
+
+<p>上面的方法显得有些臃肿，我们可以用迭代来优化它，代码如下：</p>
+
+<pre><code>public String getPermutation(int n, int k) {
+        List&lt;Integer&gt; num = new LinkedList&lt;Integer&gt;();
+        for (int i = 1; i &lt;= n; i++) num.add(i);
+        int[] fact = new int[n];  // factorial
+        fact[0] = 1;
+        for (int i = 1; i &lt; n; i++) fact[i] = i*fact[i-1];
+        k = k-1;
+        StringBuilder sb = new StringBuilder();
+        for (int i = n; i &gt; 0; i--){
+            int ind = k/fact[i-1];
+            k = k%fact[i-1];
+            sb.append(num.get(ind));
+            num.remove(ind);
+        }
+        return sb.toString();
+    }
+</code></pre>
+
+<p>上述代码中，令k = k - 1， 可以避免对k = m!情况的特殊处理，需要细细品味！</p>
+
+<p>对于这种题，我们还可以引申一下：求出所有按字母序的排列？</p>
+
+<p>时间复杂度会如何呢？</p>
+
+<p>可以用递归求解，时间复杂度是O(n!).</p>
+
+<h3 id="permutations--permutations-ii">Permutations 和 Permutations II</h3>
+
+<p>两道题的区别主要是有没有重复的元素，题目大致如下：</p>
+
+<p>Given a collection of numbers that might contain duplicates, return all possible unique permutations.</p>
+
+<p>For example,</p>
+
+<p>[1,1,2] have the following unique permutations:</p>
+
+<p>[1,1,2], [1,2,1], and [2,1,1].</p>
+
+<h4 id="section-1">没有重复的分析</h4>
+
+<p>对于没有重复元素的情况，要产生全部排列，我们可以用子问题和迭代的方式：</p>
+
+<p>如果我们已经知道了n-1个元素的全部排列，那么求n个元素的排列，就可以利用n-1个元素排列的结果，</p>
+
+<p>方法是： 将第n个数分别插入到n-1个元素的每一个排列的每一个空隙中，每一种情况都唯一，不会重复，都是一个n个元素的排列。</p>
+
+<p>这种方法非常简单，时间复杂度是O(Σk!), 其中k从1到n。 代码不再写出，下面分析有重复元素的情况。</p>
+
+<h4 id="section-2">有重复元素的解决办法</h4>
+
+<p>如果有重复元素，我们就不能像前面的方法那样随意的插入了，但是我们还是可以利用这个思想–利用之前m个元素的排列结果。</p>
+
+<p>首先我们需要将数组进行从小到大的排序，这样做的好处是让重复的元素都在一起，然后我们将数组看成一块一块的，每一块都是相同的元素，</p>
+
+<p>如果此时知道之前m个元素的所有排列，而当前的块有k个a，我们所要做的就是利用组合的方法将k个a插入到之前m个元素排列的每一种排列中去，这就变成了一个组合问题，</p>
+
+<p>那么如何插入呢?</p>
+
+<p>假如之前有一个排列是<code>1 2 3 4</code> ， 现在有3个5要插入到里面， 做法就是求解将三个5插入到5个空位中的所有情况，</p>
+
+<p>组合问题的解决十分简单，就是利用递归和回溯，可以见后面的代码。</p>
+
+<p>这样按照相同块，不断的往后推，直到数组访问完，即可产生所有排列结果，总之，思想是迭代+组合。</p>
+
+<p>此方法也可以用于求解没有重复元素的情况。</p>
+
+<p>对于时间复杂度分析比较复杂，假设平均每块大小为m，有k块，则n = mk, 时间复杂度可以大致表示为O(n^m)(不太确定复杂度的计算)。</p>
+
+<p>代码如下：</p>
+
+<pre><code>public class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; permuteUnique(int[] nums) {
+        List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+        result.add(new ArrayList&lt;Integer&gt;());
+        Arrays.sort(nums);
+        for (int i = 0 ; i &lt; nums.length; ++i) {
+            List&lt;List&lt;Integer&gt;&gt; temp = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+            int count = 1;
+            int val = nums[i];
+            while (i+1 &lt; nums.length &amp;&amp; nums[i] == nums[i+1]) {
+                i++;
+                count++;
+            }
+            for (int j = 0 ; j &lt; result.size(); ++j) {
+                List&lt;Integer&gt; item = result.get(j);
+                List&lt;List&lt;Integer&gt;&gt; new_items = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+                ArrayList&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+                generate(item.size(),0,count,new_items,list);
+                for (int k = 0; k &lt; new_items.size(); ++k) {
+                    ArrayList&lt;Integer&gt; locs = (ArrayList)new_items.get(k);
+                    List&lt;Integer&gt; one = new ArrayList&lt;Integer&gt;(item);
+                    for (int w = locs.size()-1; w &gt;= 0 ; --w) {
+                        one.add(locs.get(w),val);
+                    }
+                    temp.add(one);
+                }
+            }
+            result = temp;
+        }
+        return result;
+    }
+    public void generate(int len, int index, int count, List&lt;List&lt;Integer&gt;&gt; new_items, ArrayList&lt;Integer&gt; list) {
+        for (int i = index; i &lt;= len; ++i) {
+            list.add(i);
+            if (list.size() == count) {
+                new_items.add((ArrayList)list.clone());
+            }
+            else {
+                generate(len,i,count,new_items,list);
+            }
+            list.remove(list.size()-1);
+        }
+    }
+}
+</code></pre>
+
+				</span>
+				<div class="journal-date">Published 02 June 2015</div>
+				<div class="journal-tags">
+				
+				
+	 
+		<a class="tag-cont" href="/tags.html#leetcode-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">leetcode</div>
+			<div class="tag-r"></div>
+		</a>
+	 
+		<a class="tag-cont" href="/tags.html#algorithm-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">algorithm</div>
+			<div class="tag-r"></div>
+		</a>
+	
+
+
+
+				</div>
+			</div>
+		</div>
+		<div class="clearboth"></div>
+	</div>
+</div>
+	<div class="clearboth"></div>
+	
+
+
+  <!-- 多说评论框 start -->
+<div id="comments">
+    <div class="ds-thread" data-thread-key="/leetcode/2015/06/02/Permutation"  data-title="Permutation - Hombo's Blog"></div>
+</div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hombo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+	<div class="clearboth"></div>
+</div>
+
+			</div>
+			<div class="clearboth pagebottom"></div>
+		</div>
+	</div>
+    <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=5&amp;fs=4&amp;bgcolor=Orange"></script>
+
+	<footer>
+	<div class="footer-940">
+		<div class="footer-general-info">
+			© 2014 Hombo Wang.<br><br>
+			Content licensed under:<br>
+			<a class="cc" href="http://creativecommons.org/licenses/by-sa/3.0/">c a b</a><br>
+			<a href = "/about.html">About Me</a><br>
+		</div>
+		<div class="footer-col-cont">
+			<div class="footer-nav-col">
+				<h4><a>Categories</a></h4>
+				<ul>
+					
+					
+
+
+  
+     
+    	<li><a href="/categories.html#leetcode-ref">
+    		leetcode <span>9</span>
+    	</a></li>
+     
+    	<li><a href="/categories.html#algorithm-ref">
+    		algorithm <span>1</span>
+    	</a></li>
+     
+    	<li><a href="/categories.html#hosts-ref">
+    		hosts <span>1</span>
+    	</a></li>
+     
+    	<li><a href="/categories.html#android-ref">
+    		android <span>6</span>
+    	</a></li>
+     
+    	<li><a href="/categories.html#latex-ref">
+    		latex <span>1</span>
+    	</a></li>
+     
+    	<li><a href="/categories.html#java-ref">
+    		java <span>1</span>
+    	</a></li>
+    
+  
+
+
+				</ul>
+			</div>
+			<div class="footer-nav-col">
+				<h4><a>Pages</a></h4>
+				<ul>
+					
+					
+					
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/about.html">About Me</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+				</ul>
+			</div>
+			<div class="footer-nav-col">
+				<h4><a>Feed</a></h4>
+				<ul>
+					<li><a href="/atom.xml">Atom Feed</a></li>
+					<li><a href="/rss.xml">RSS Feed</a></li>
+				</ul>
+			</div>
+			<div class="footer-nav-col">
+				<h4><a>Links</a></h4>
+				<ul>
+				 
+					<li><a href = "http://hombo.wang">Hombo's Blog</a></li>
+				
+				</ul>
+			</div>
+			<div class="footer-nav-col">
+				<h4><a href = "/about.html">About Me</a></h4>
+				<ul>
+				 
+					<li><a href = "mailto:wanghongbo@ict.ac.cn">e-mail</a></li>
+				 
+					<li><a href = "http://cn.linkedin.com/pub/hongbo-wang/70/4b0/921/">LinkedIn</a></li>
+				 
+					<li><a href = "https://github.com/kingmacrobo">Github</a></li>
+				 
+					<li><a href = "http://www.weibo.com/mbkg">WeiBo</a></li>
+				 
+					<li><a href = "http://blog.csdn.net/u013101828">CSDN</a></li>
+				
+				</ul>
+			</div>
+			<div class="clearboth"></div>
+		</div>
+		<div class="clearboth"></div>
+	</div>
+	<div class="clearboth"></div>
+</footer>
+	
+</body>
+</html>
+
