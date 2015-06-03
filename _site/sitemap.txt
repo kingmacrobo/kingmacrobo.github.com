@@ -13,6 +13,7 @@ http://hombo.wang/2/index.html
 http://hombo.wang/3/index.html
 http://hombo.wang/4/index.html
 
+http://hombo.wang/algorithm/2015/06/03/Edit_Distance
 http://hombo.wang/leetcode/2015/06/02/Permutation
 http://hombo.wang/leetcode/2015/06/01/Spiral-Matrix
 http://hombo.wang/leetcode/2015/06/01/Merge-Intervals
