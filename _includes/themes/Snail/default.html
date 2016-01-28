@@ -45,34 +45,8 @@
     <link href="{{ BASE_PATH }}{{ site.JB.rss_path }}" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
 </head>
 <body>
-	<noscript>
-		&amp;lt;div id="no-js"&amp;gt;Please enable JavaScript in your browser to experience {{ HOME_PATH }} fully&amp;lt;/div&amp;gt;
-	</noscript>
-		<div>
-            <div style="margin:2px 0px 2px 805px;width:340px; height:25px;">
-                {% include themes/Snail/counts.html %}
-            </div>
-			{% include themes/Snail/nav.html %}
-			<div id="page-content">
-				{{ content }}
-			</div>
-			<div class="clearboth pagebottom"></div>
-		</div>
-	</div>
-    <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=5&amp;fs=4&amp;bgcolor=Orange"></script>
-
-	{% include themes/Snail/footer.html %}
-	{% include JB/analytics %}
-	<script>
-
-/*
-Count up from any date script-
-By JavaScript Kit (www.javascriptkit.com)
-Over 200+ free scripts here!
-*/
-
+<script>
 var montharray=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
-
 function countup(yr,m,d){
 var today=new Date()
 var todayy=today.getYear()
@@ -89,5 +63,23 @@ document.write("It\'s been "+difference+" since the launch of JavaScript Kit!")
 //enter the count up date using the format year/month/day
 countup(1997,12,05)
 </script>
+	<noscript>
+		&amp;lt;div id="no-js"&amp;gt;Please enable JavaScript in your browser to experience {{ HOME_PATH }} fully&amp;lt;/div&amp;gt;
+	</noscript>
+	<div>
+            <div style="margin:2px 0px 2px 805px;width:340px; height:25px;">
+                {% include themes/Snail/counts.html %}
+                </div>
+			{% include themes/Snail/nav.html %}
+			<div id="page-content">
+				{{ content }}
+		</div>
+		<div class="clearboth pagebottom"></div>
+	     </div>
+	</div>
+    <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=5&amp;fs=4&amp;bgcolor=Orange"></script>
+
+	{% include themes/Snail/footer.html %}
+	{% include JB/analytics %}
 </body>
 </html>
