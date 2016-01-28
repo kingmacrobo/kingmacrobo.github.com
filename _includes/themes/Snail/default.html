@@ -45,37 +45,20 @@
     <link href="{{ BASE_PATH }}{{ site.JB.rss_path }}" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
 </head>
 <body>
-<script>
-var montharray=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
-function countup(yr,m,d){
-var today=new Date()
-var todayy=today.getYear()
-if (todayy < 1000)
-todayy+=1900
-var todaym=today.getMonth()
-var todayd=today.getDate()
-var todaystring=montharray[todaym]+" "+todayd+", "+todayy
-var paststring=montharray[m-1]+" "+d+", "+yr
-var difference=(Math.round((Date.parse(todaystring)-Date.parse(paststring))/(24*60*60*1000))*1)
-difference+=" days"
-document.write("It\'s been "+difference+" since the launch of JavaScript Kit!")
-}
-//enter the count up date using the format year/month/day
-countup(1997,12,05)
-</script>
 	<noscript>
 		&amp;lt;div id="no-js"&amp;gt;Please enable JavaScript in your browser to experience {{ HOME_PATH }} fully&amp;lt;/div&amp;gt;
 	</noscript>
-	<div>
+    <div id="page-container">
+		<div>
             <div style="margin:2px 0px 2px 805px;width:340px; height:25px;">
                 {% include themes/Snail/counts.html %}
-                </div>
+            </div>
 			{% include themes/Snail/nav.html %}
 			<div id="page-content">
 				{{ content }}
+			</div>
+			<div class="clearboth pagebottom"></div>
 		</div>
-		<div class="clearboth pagebottom"></div>
-	     </div>
 	</div>
     <a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=5&amp;fs=4&amp;bgcolor=Orange"></script>
 
