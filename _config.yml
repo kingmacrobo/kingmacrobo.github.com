@@ -3,7 +3,9 @@
 permalink: /:categories/:year/:month/:day/:title 
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
-pygments: true
+highlighter: pygments
+
+gems: [jekyll-paginate]
 
 markdown: kramdown
 

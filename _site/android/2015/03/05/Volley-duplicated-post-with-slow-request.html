@@ -4,26 +4,26 @@
 <head>
 	<meta charset="utf-8">
 	
-	<title>Hombo's Blog</title>
+	<title>Volley duplicated post with slow request</title>
     
 	
 	<meta name="author" content="Hombo Wang">
 	
-	<link rel="stylesheet" href="/assets/themes/Snail/css/jquery.fancybox.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/main.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/pages/journal.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/team.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/static.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/errors.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/google-code-prettify/prettify.css">
+	<link rel="stylesheet" href="/assets/themes//css/jquery.fancybox.css">
+	<link rel="stylesheet" href="/assets/themes//css/main.css">
+	<link rel="stylesheet" href="/assets/themes//css/pages/journal.css">
+	<link rel="stylesheet" href="/assets/themes//css/team.css">
+	<link rel="stylesheet" href="/assets/themes//css/static.css">
+	<link rel="stylesheet" href="/assets/themes//css/errors.css">
+	<link rel="stylesheet" href="/assets/themes//google-code-prettify/prettify.css">
 	
-	<link rel="shortcut icon" href="/assets/themes/Snail/img/favicon.ico">
+	<link rel="shortcut icon" href="/assets/themes//img/favicon.ico">
 	
-	<script type="text/javascript" src="/assets/themes/Snail/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/themes//js/jquery.min.js"></script>
 	
-	<script type="text/javascript" src="/assets/themes/Snail/js/auto_loadmore.js"></script>
+	<script type="text/javascript" src="/assets/themes//js/auto_loadmore.js"></script>
 	
-	<script type="text/javascript" src="/assets/themes/Snail/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript" src="/assets/themes//google-code-prettify/prettify.js"></script>
 	
 	<script type="text/javascript">
 	  $(function(){
@@ -166,176 +166,105 @@ countup(2015,10,18)
 </nav>
 			<div id="page-content">
 				
-<div class="page-title-inline">
-	
-	<h1>Hombo's Blog </h1>
-	
-	
-</div>
-<div class="cont932">
-	<hr style="margin-top: 0;">
+<div id="page-content">
+	<div class="cont932">
 	<div id="journal-articles-block">
-	
 		<div class="journal-article">
 			<div class="journal-post-info">
+				<div class="journal-cat-box">
 				
 				
 				<div class="journal-cat-box">
 
-<a href="/categories.html#Algorithm-ref" title="Algorithm">
-	Algorithm
+<a href="/categories.html#Android-ref" title="Android">
+	Android
 
 </a>
 </div>
 				
+				</div>
 			</div>
 			<div class="journal-body">
-				<h1 class="journal-title"><a href="/algorithm/2015/06/03/Edit_Distance">编辑距离(Edit Distance)</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>编辑距离（Edit Distance），又称Levenshtein距离，是指两个字串之间，由一个转成另一个所需的最少编辑操作次数。许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。</p>
+				<h1 class="journal-title">Volley duplicated post with slow request<span class="author">by hombo</span>
+				</h1>
+				<span class="the-article">
+				<p>最近做一个android的项目，遇到一个比较奇怪的问题：使用volley框架向服务器post几张图片，也就是图片的上传，当图片比较多或者比较大的时候，发现会触发好多次相同的post，现在记录一下问题的原因和解决方法。</p>
 
-<p>例如将kitten一字转成sitting：</p>
+<!--more-->
 
-<pre><code>sitten （k→s）
-sittin （e→i）
-sitting （→g）
+<h4 id="post">出现多次post的原因</h4>
+<p>volley的post有两个超时时间，一个是retry的阈值时间t1，一个是post的超时时间timeout，当post的超时时间timeout大于retry的阈值时间时，就会产生这种想象，也就是在第一个post由于传输量比较大而没有完成之前，产生了retry，也就会产生额外的post。</p>
+
+<h4 id="section">解决方法1</h4>
+<p>既然retry会造成这种错误，在传输量比较大的时候，我们干脆就不用retry，禁止掉retry的方式是设置retry的阈值为0，代码如下：</p>
+
+<pre><code>	postRequest.setRetryPolicy(new DefaultRetryPolicy(
+			0, //设置retry的时间阈值
+			DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+			DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 </code></pre>
 
-<p>俄罗斯科学家Vladimir Levenshtein在1965年提出这个概念。</p>
+<p>这种方式简单，但是禁止retry对功能上会产生一定的影响。</p>
 
-<p>那么，给定两个word，如何快速的计算所两者的编辑距离呢？</p>
+<h4 id="section-1">解决方法2</h4>
+<p>修改retry的阈值时间，使它大于post的timeout时间，这种方式比较合理，一般的设置方法是将retry的阈值时间扩大到默认时间的k倍，k值视具体情况而定。代码如下：</p>
+
+<pre><code>	postRequest.setRetryPolicy(new DefaultRetryPolicy(
+			DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * k,
+			DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+			DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+</code></pre>
 
 
-				
 				</span>
-				<span class="readmore"><a href="/algorithm/2015/06/03/Edit_Distance">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
+				<div class="journal-date">Published 05 March 2015</div>
+				<div class="journal-tags">
 				
 				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/06/02/Permutation">Permutation</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>leetcode上有四道关于排列的题，分别是：Next Permutation， Permutations， Permutations II 和 Permutation Sequence。对于Next Permutation和Permutation Sequence， 都是关于排列的字母序的，基本思想类似。对于Permutations和Permutations II，差别只是在于是否有重复的元素，有重复元素的实现会涉及到组合问题，比较棘手。</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/06/02/Permutation">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/06/01/Spiral-Matrix">Spiral Matrix</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>对矩阵的访问花样很多，例如矩阵分别按行列排好序，然后进行查找；又比如矩阵的旋转，可以旋转90度，旋转180等等。而本题也很有趣，需要按顺时针螺旋的方式访问矩阵，并将1，2，3…..n^2，填入螺旋访问过程中的每个点。</p>
-
-<p>这个问题的关键在于如何实现螺旋遍历？</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/06/01/Spiral-Matrix">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/06/01/Merge-Intervals">Merge Intervals</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>Leetcode 上面有两道关于数轴区间重合和归并的问题：Merge Intervals 和 Insert Interval。两道题大同小异，可以用类似的方法求解。主要问题是如何区分两段区间是否重合，和采用哪种方式进行归并，要求效率要高。</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/06/01/Merge-Intervals">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/05/29/Maximum_Subarray">Maximum Subarray</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.</p>
-
-<p>For example, given the array [−2,1,−3,4,−1,2,1,−5,4],</p>
-
-<p>the contiguous subarray [4,−1,2,1] has the largest sum = 6.</p>
-
-<p>非常经典的一道题–连续字段和。</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/05/29/Maximum_Subarray">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-	</div>
+	 
+		<a class="tag-cont" href="/tags.html#android-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">android</div>
+			<div class="tag-r"></div>
+		</a>
 	
-	<div id="journal-arrows-cont">
-			<a href="/2" class="journal-arrow ja-forward"></a>
+
+
+
+				</div>
+			</div>
+		</div>
+		<div class="clearboth"></div>
 	</div>
-	
+</div>
 	<div class="clearboth"></div>
-	<div id="journal-loadmore">Load More…</div>
+	
+
+
+  <!-- 多说评论框 start -->
+<div id="comments">
+    <div class="ds-thread" data-thread-key="/android/2015/03/05/Volley-duplicated-post-with-slow-request"  data-title="Volley duplicated post with slow request - Hombo's Blog"></div>
+</div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hombo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+
+
 	<div class="clearboth"></div>
 </div>
-<div class="clearboth"></div>
+
 			</div>
 			<div class="clearboth pagebottom"></div>
 		</div>

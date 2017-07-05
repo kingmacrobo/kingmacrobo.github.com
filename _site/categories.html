@@ -41,6 +41,32 @@
     <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
 </head>
 <body>
+	<script>
+
+/*
+Count up from any date script-
+By JavaScript Kit (www.javascriptkit.com)
+Over 200+ free scripts here!
+*/
+
+var montharray=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
+
+function countup(yr,m,d){
+var today=new Date()
+var todayy=today.getYear()
+if (todayy < 1000)
+todayy+=1900
+var todaym=today.getMonth()
+var todayd=today.getDate()
+var todaystring=montharray[todaym]+" "+todayd+", "+todayy
+var paststring=montharray[m-1]+" "+d+", "+yr
+var difference=1 + (Math.round((Date.parse(todaystring)-Date.parse(paststring))/(24*60*60*1000))*1)
+difference = "<div style=\"text-align:center;font-size:25px\">" + "IT HAS BEEN " + difference + " DAYS!" + "</div>"
+document.write(difference);
+}
+//enter the count up date using the format year/month/day
+countup(2015,10,18)
+</script>
 	<noscript>
 		&amp;lt;div id="no-js"&amp;gt;Please enable JavaScript in your browser to experience / fully&amp;lt;/div&amp;gt;
 	</noscript>
@@ -66,7 +92,7 @@
 				
 				  
 					
-					<li id = "About Me"><a href="/about.html">About Me</a></li>
+					<li id = "About Me"><a href="/about">About Me</a></li>
 					
 				  
 				
@@ -74,7 +100,7 @@
 				
 				  
 					
-					<li id = "Archive"><a href="/archive.html">Archive</a></li>
+					<li id = "Archive"><a href="/archive">Archive</a></li>
 					
 				  
 				
@@ -88,7 +114,7 @@
 					
 					<li  id = "Categories" class="active">
 					<span class="nav-l-active"></span>
-					<a href="/categories.html" class="active">Categories</a>
+					<a href="/categories" class="active">Categories</a>
 					<span class="nav-r-active"></span>
 					</li>
 					
@@ -112,7 +138,7 @@
 				
 				  
 					
-					<li id = "Tags"><a href="/tags.html">Tags</a></li>
+					<li id = "Tags"><a href="/tags">Tags</a></li>
 					
 				  
 				
@@ -180,24 +206,32 @@
  
 	<div class="journal-cat-box">
 
-<a href="/categories.html#android-ref" title="android">
-	android
+<a href="/categories.html#Android-ref" title="Android">
+	Android
 
 </a>
 </div>
  
 	<div class="journal-cat-box">
 
-<a href="/categories.html#latex-ref" title="latex">
-	latex
+<a href="/categories.html#Latex-ref" title="Latex">
+	Latex
 
 </a>
 </div>
  
 	<div class="journal-cat-box">
 
-<a href="/categories.html#java-ref" title="java">
-	java
+<a href="/categories.html#Java-ref" title="Java">
+	Java
+
+</a>
+</div>
+ 
+	<div class="journal-cat-box">
+
+<a href="/categories.html#Algorithm-ref" title="Algorithm">
+	Algorithm
 
 </a>
 </div>
@@ -307,14 +341,6 @@
     
       
       	
-      	<li><a href="/algorithm/2015/06/03/Edit_Distance">编辑距离(Edit Distance)</a></li>
-      	
-      
-    
-  
-    
-      
-      	
       	<li><a href="/algorithm/2014/10/05/swap-two-int">swap两个int指针指向的数</a></li>
       	
       
@@ -351,7 +377,7 @@
 			 
 
 			<div  class="team-member">
-			  <h2 id="android-ref">android</h2>
+			  <h2 id="Android-ref">Android</h2>
 			  <ul>
 				  
 				
@@ -414,7 +440,7 @@
 			 
 
 			<div  class="team-member">
-			  <h2 id="latex-ref">latex</h2>
+			  <h2 id="Latex-ref">Latex</h2>
 			  <ul>
 				  
 				
@@ -437,7 +463,7 @@
 			 
 
 			<div  class="team-member">
-			  <h2 id="java-ref">java</h2>
+			  <h2 id="Java-ref">Java</h2>
 			  <ul>
 				  
 				
@@ -448,6 +474,29 @@
       
       	
       	<li><a href="/java/2015/03/10/Java-base-type-range">Java 八种基本数据类型的表示范围</a></li>
+      	
+      
+    
+  
+
+
+
+			  </ul>
+			</div>
+			 
+
+			<div  class="team-member">
+			  <h2 id="Algorithm-ref">Algorithm</h2>
+			  <ul>
+				  
+				
+
+
+  
+    
+      
+      	
+      	<li><a href="/algorithm/2015/06/03/Edit_Distance">编辑距离(Edit Distance)</a></li>
       	
       
     
@@ -496,23 +545,27 @@
     	</a></li>
      
     	<li><a href="/categories.html#algorithm-ref">
-    		algorithm <span>2</span>
+    		algorithm <span>1</span>
     	</a></li>
      
     	<li><a href="/categories.html#hosts-ref">
     		hosts <span>1</span>
     	</a></li>
      
-    	<li><a href="/categories.html#android-ref">
-    		android <span>6</span>
+    	<li><a href="/categories.html#Android-ref">
+    		Android <span>6</span>
     	</a></li>
      
-    	<li><a href="/categories.html#latex-ref">
-    		latex <span>1</span>
+    	<li><a href="/categories.html#Latex-ref">
+    		Latex <span>1</span>
     	</a></li>
      
-    	<li><a href="/categories.html#java-ref">
-    		java <span>1</span>
+    	<li><a href="/categories.html#Java-ref">
+    		Java <span>1</span>
+    	</a></li>
+     
+    	<li><a href="/categories.html#Algorithm-ref">
+    		Algorithm <span>1</span>
     	</a></li>
     
   
@@ -536,7 +589,7 @@
     
       
       	
-      	<li><a href="/about.html">About Me</a></li>
+      	<li><a href="/about">About Me</a></li>
       	
       
     
@@ -544,30 +597,8 @@
     
       
       	
-      	<li><a href="/archive.html">Archive</a></li>
+      	<li><a href="/archive">Archive</a></li>
       	
-      
-    
-  
-    
-      
-    
-  
-    
-      
-      	
-      	<li class="active"><a href="/categories.html" class="active">Categories</a></li>
-      	
-      
-    
-  
-    
-  
-    
-      
-    
-  
-    
       
     
   
@@ -578,7 +609,29 @@
     
       
       	
-      	<li><a href="/tags.html">Tags</a></li>
+      	<li class="active"><a href="/categories" class="active">Categories</a></li>
+      	
+      
+    
+  
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags">Tags</a></li>
       	
       
     

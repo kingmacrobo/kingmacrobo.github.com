@@ -41,6 +41,32 @@
     <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
 </head>
 <body>
+	<script>
+
+/*
+Count up from any date script-
+By JavaScript Kit (www.javascriptkit.com)
+Over 200+ free scripts here!
+*/
+
+var montharray=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
+
+function countup(yr,m,d){
+var today=new Date()
+var todayy=today.getYear()
+if (todayy < 1000)
+todayy+=1900
+var todaym=today.getMonth()
+var todayd=today.getDate()
+var todaystring=montharray[todaym]+" "+todayd+", "+todayy
+var paststring=montharray[m-1]+" "+d+", "+yr
+var difference=1 + (Math.round((Date.parse(todaystring)-Date.parse(paststring))/(24*60*60*1000))*1)
+difference = "<div style=\"text-align:center;font-size:25px\">" + "IT HAS BEEN " + difference + " DAYS!" + "</div>"
+document.write(difference);
+}
+//enter the count up date using the format year/month/day
+countup(2015,10,18)
+</script>
 	<noscript>
 		&amp;lt;div id="no-js"&amp;gt;Please enable JavaScript in your browser to experience / fully&amp;lt;/div&amp;gt;
 	</noscript>
@@ -66,7 +92,7 @@
 				
 				  
 					
-					<li id = "About Me"><a href="/about.html">About Me</a></li>
+					<li id = "About Me"><a href="/about">About Me</a></li>
 					
 				  
 				
@@ -76,7 +102,7 @@
 					
 					<li  id = "Archive" class="active">
 					<span class="nav-l-active"></span>
-					<a href="/archive.html" class="active">Archive</a>
+					<a href="/archive" class="active">Archive</a>
 					<span class="nav-r-active"></span>
 					</li>
 					
@@ -90,7 +116,7 @@
 				
 				  
 					
-					<li id = "Categories"><a href="/categories.html">Categories</a></li>
+					<li id = "Categories"><a href="/categories">Categories</a></li>
 					
 				  
 				
@@ -112,7 +138,7 @@
 				
 				  
 					
-					<li id = "Tags"><a href="/tags.html">Tags</a></li>
+					<li id = "Tags"><a href="/tags">Tags</a></li>
 					
 				  
 				
@@ -407,6 +433,22 @@
 			
 			
 			
+			<li><span>October  6, 2014</span> &raquo; <a href="/hosts/2014/10/06/hosts">无私分享一个翻墙的好方法</a></li>
+			
+			
+			      
+				
+			  
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			<li><span>October  6, 2014</span> &raquo; <a href="/leetcode/2014/10/06/surrounded-regions">Leetcode Surrounded Regions</a></li>
 			
 			
@@ -440,22 +482,6 @@
 			
 			
 			<li><span>October  6, 2014</span> &raquo; <a href="/leetcode/2014/10/06/longest-consecutive-sequence">Longest Consecutive Sequence</a></li>
-			
-			
-			      
-				
-			  
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			<li><span>October  6, 2014</span> &raquo; <a href="/hosts/2014/10/06/hosts">无私分享一个翻墙的好方法</a></li>
 			
 			
 			      
@@ -532,23 +558,27 @@
     	</a></li>
      
     	<li><a href="/categories.html#algorithm-ref">
-    		algorithm <span>2</span>
+    		algorithm <span>1</span>
     	</a></li>
      
     	<li><a href="/categories.html#hosts-ref">
     		hosts <span>1</span>
     	</a></li>
      
-    	<li><a href="/categories.html#android-ref">
-    		android <span>6</span>
+    	<li><a href="/categories.html#Android-ref">
+    		Android <span>6</span>
     	</a></li>
      
-    	<li><a href="/categories.html#latex-ref">
-    		latex <span>1</span>
+    	<li><a href="/categories.html#Latex-ref">
+    		Latex <span>1</span>
     	</a></li>
      
-    	<li><a href="/categories.html#java-ref">
-    		java <span>1</span>
+    	<li><a href="/categories.html#Java-ref">
+    		Java <span>1</span>
+    	</a></li>
+     
+    	<li><a href="/categories.html#Algorithm-ref">
+    		Algorithm <span>1</span>
     	</a></li>
     
   
@@ -572,7 +602,7 @@
     
       
       	
-      	<li><a href="/about.html">About Me</a></li>
+      	<li><a href="/about">About Me</a></li>
       	
       
     
@@ -580,30 +610,8 @@
     
       
       	
-      	<li class="active"><a href="/archive.html" class="active">Archive</a></li>
+      	<li class="active"><a href="/archive" class="active">Archive</a></li>
       	
-      
-    
-  
-    
-      
-    
-  
-    
-      
-      	
-      	<li><a href="/categories.html">Categories</a></li>
-      	
-      
-    
-  
-    
-  
-    
-      
-    
-  
-    
       
     
   
@@ -614,7 +622,29 @@
     
       
       	
-      	<li><a href="/tags.html">Tags</a></li>
+      	<li><a href="/categories">Categories</a></li>
+      	
+      
+    
+  
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags">Tags</a></li>
       	
       
     

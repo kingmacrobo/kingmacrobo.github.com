@@ -4,26 +4,26 @@
 <head>
 	<meta charset="utf-8">
 	
-	<title>Hombo's Blog</title>
+	<title>编辑距离(Edit Distance)</title>
     
 	
 	<meta name="author" content="Hombo Wang">
 	
-	<link rel="stylesheet" href="/assets/themes/Snail/css/jquery.fancybox.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/main.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/pages/journal.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/team.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/static.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/errors.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/google-code-prettify/prettify.css">
+	<link rel="stylesheet" href="/assets/themes//css/jquery.fancybox.css">
+	<link rel="stylesheet" href="/assets/themes//css/main.css">
+	<link rel="stylesheet" href="/assets/themes//css/pages/journal.css">
+	<link rel="stylesheet" href="/assets/themes//css/team.css">
+	<link rel="stylesheet" href="/assets/themes//css/static.css">
+	<link rel="stylesheet" href="/assets/themes//css/errors.css">
+	<link rel="stylesheet" href="/assets/themes//google-code-prettify/prettify.css">
 	
-	<link rel="shortcut icon" href="/assets/themes/Snail/img/favicon.ico">
+	<link rel="shortcut icon" href="/assets/themes//img/favicon.ico">
 	
-	<script type="text/javascript" src="/assets/themes/Snail/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/themes//js/jquery.min.js"></script>
 	
-	<script type="text/javascript" src="/assets/themes/Snail/js/auto_loadmore.js"></script>
+	<script type="text/javascript" src="/assets/themes//js/auto_loadmore.js"></script>
 	
-	<script type="text/javascript" src="/assets/themes/Snail/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript" src="/assets/themes//google-code-prettify/prettify.js"></script>
 	
 	<script type="text/javascript">
 	  $(function(){
@@ -166,18 +166,12 @@ countup(2015,10,18)
 </nav>
 			<div id="page-content">
 				
-<div class="page-title-inline">
-	
-	<h1>Hombo's Blog </h1>
-	
-	
-</div>
-<div class="cont932">
-	<hr style="margin-top: 0;">
+<div id="page-content">
+	<div class="cont932">
 	<div id="journal-articles-block">
-	
 		<div class="journal-article">
 			<div class="journal-post-info">
+				<div class="journal-cat-box">
 				
 				
 				<div class="journal-cat-box">
@@ -188,11 +182,13 @@ countup(2015,10,18)
 </a>
 </div>
 				
+				</div>
 			</div>
 			<div class="journal-body">
-				<h1 class="journal-title"><a href="/algorithm/2015/06/03/Edit_Distance">编辑距离(Edit Distance)</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>编辑距离（Edit Distance），又称Levenshtein距离，是指两个字串之间，由一个转成另一个所需的最少编辑操作次数。许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。</p>
+				<h1 class="journal-title">编辑距离(Edit Distance)<span class="author">by hombo</span>
+				</h1>
+				<span class="the-article">
+				<p>编辑距离（Edit Distance），又称Levenshtein距离，是指两个字串之间，由一个转成另一个所需的最少编辑操作次数。许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。</p>
 
 <p>例如将kitten一字转成sitting：</p>
 
@@ -205,137 +201,138 @@ sitting （→g）
 
 <p>那么，给定两个word，如何快速的计算所两者的编辑距离呢？</p>
 
+<!--more-->
 
-				
+<h3 id="section">动态规划求解编辑距离</h3>
+
+<p>利用动态规划可以将编辑距离问题快速求解，那么怎样去表示动态规划的状态呢？</p>
+
+<p>首先我们可以从一个表格入手，竖着的表示word1，横着的表示word2：</p>
+
+<pre><code> 	0	f	a	i	l	i	n	g
+0	 	 	 	 	 	 	 	 
+s	 	 	 	 	 	 	 	 
+a	 	 	 	 	 	 	 	 
+i	 	 	 	 	 	 	 	 
+l	 	 	 	 	 	 	 	 
+n	
+</code></pre>
+
+<p>这个表格中的每个点可以表示一种状态，例如点(i,j) 对应的是：<code>word1的前i个字符组成的字串</code> 和 <code>word2的前j个字符组成的字串</code> ，</p>
+
+<p>如果我们将edit(i,j)表示这种状态的最优值，也就是这个两个字串的最小编辑次数，即编辑距离， 那么，我们就可以得出以下这些递推关系：</p>
+
+<pre><code>当i = 0, j = 0时，edit(0,0) = 0, 表示什么两个空字符串的编辑距离为0.
+当i = 0, j &gt; 0时，edit(0,j) = j, 表示i所在的字符串为空，而j所在的字符串长度为j，因此编辑距离是j。
+当i &gt; 0, j = 0时，edit(i,0) = j, 表示j所在的字符串为空，而j所在的字符串长度为i，因此编辑距离是i。
+当i &gt; 0, j &gt; 0时，edit(i,j) = min{ edit(i-1,j)+1, edit(i,j-1)+1, edit(i-1,j-1)+val }, 其中，当word1[i] == word2[j]时，val = 0, 否则val = 1
+(从上下来，表明多了一个字符，就需要在上面的最优值上再加一，表明需要一次插入操作，从左过来也一样；从左上过来，两个字符串同时多了一个字符，如果多的这个字符相同，
+ 那当前最优值就和左上一样，否则就需要加一，表明需要一次替换操作)
+</code></pre>
+
+<p>一个例子如下：</p>
+
+<pre><code>	0	f	a	i	l	i	n	g
+0	0	1	2	3	4	5	6	7
+s	1	1	2	3	4	5	6	7
+a	2	2	1	2	3	4	5	6
+i	3	3	2	1	2	3	4	5
+l	4	4	3	2	1	2	3	4
+n	5	5	4	3	2	2	2	3
+</code></pre>
+
+<p>有了上面详细的递推关系，我们可以很容易的写出动态规划求解编辑距离的代码，这里引用leetcode上的对Edit Distance的解法，时间和空间复杂度都是O(mn)：</p>
+
+<pre><code>// Edit Distance, DP solution
+// edit(i,j) means the minimum distance of substring (1,i) of word1 and substring (1,j) of word2.
+// the recurse formula is :
+//    edit(0,0) = 0
+//    edit(0,j) = j
+//    edit(i,0) = i
+//    edit(i,j) = min{edit(i-1,j)+1, edit(i,j-1)+1, edit(i-1,j-1) + value}, i &gt;=1, j&gt;=1, 
+//    if word.charAt(i) == word.charAt(j), value = 0, or value = 1.
+// Time and space are both O(n^2).
+
+public class Solution {
+    public int minDistance(String word1, String word2) {
+        int n = word1.length(), m = word2.length();
+        int[][] edit = new int[n+1][m+1];
+        edit[0][0] = 0;
+        for (int i = 1; i &lt;= n; ++i) {
+            edit[i][0] = i;
+        }
+        for (int i = 1; i &lt;= m; ++i) {
+            edit[0][i] = i;
+        }
+        for (int i = 1; i &lt;= n; ++i)
+            for (int j = 1; j &lt;= m; ++j) {
+                int up_left = Math.min(edit[i-1][j],edit[i][j-1]) + 1;
+                int diagonal = edit[i-1][j-1];
+                if (word1.charAt(i-1) != word2.charAt(j-1))
+                    diagonal++;
+                edit[i][j] = Math.min(up_left,diagonal);
+            }
+        return edit[n][m];
+    }
+}
+</code></pre>
+
+
 				</span>
-				<span class="readmore"><a href="/algorithm/2015/06/03/Edit_Distance">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
+				<div class="journal-date">Published 03 June 2015</div>
+				<div class="journal-tags">
 				
 				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/06/02/Permutation">Permutation</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>leetcode上有四道关于排列的题，分别是：Next Permutation， Permutations， Permutations II 和 Permutation Sequence。对于Next Permutation和Permutation Sequence， 都是关于排列的字母序的，基本思想类似。对于Permutations和Permutations II，差别只是在于是否有重复的元素，有重复元素的实现会涉及到组合问题，比较棘手。</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/06/02/Permutation">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/06/01/Spiral-Matrix">Spiral Matrix</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>对矩阵的访问花样很多，例如矩阵分别按行列排好序，然后进行查找；又比如矩阵的旋转，可以旋转90度，旋转180等等。而本题也很有趣，需要按顺时针螺旋的方式访问矩阵，并将1，2，3…..n^2，填入螺旋访问过程中的每个点。</p>
-
-<p>这个问题的关键在于如何实现螺旋遍历？</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/06/01/Spiral-Matrix">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/06/01/Merge-Intervals">Merge Intervals</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>Leetcode 上面有两道关于数轴区间重合和归并的问题：Merge Intervals 和 Insert Interval。两道题大同小异，可以用类似的方法求解。主要问题是如何区分两段区间是否重合，和采用哪种方式进行归并，要求效率要高。</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/06/01/Merge-Intervals">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/05/29/Maximum_Subarray">Maximum Subarray</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.</p>
-
-<p>For example, given the array [−2,1,−3,4,−1,2,1,−5,4],</p>
-
-<p>the contiguous subarray [4,−1,2,1] has the largest sum = 6.</p>
-
-<p>非常经典的一道题–连续字段和。</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/05/29/Maximum_Subarray">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-	</div>
+	 
+		<a class="tag-cont" href="/tags.html#leetcode-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">leetcode</div>
+			<div class="tag-r"></div>
+		</a>
+	 
+		<a class="tag-cont" href="/tags.html#algorithm-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">algorithm</div>
+			<div class="tag-r"></div>
+		</a>
 	
-	<div id="journal-arrows-cont">
-			<a href="/2" class="journal-arrow ja-forward"></a>
+
+
+
+				</div>
+			</div>
+		</div>
+		<div class="clearboth"></div>
 	</div>
-	
+</div>
 	<div class="clearboth"></div>
-	<div id="journal-loadmore">Load More…</div>
+	
+
+
+  <!-- 多说评论框 start -->
+<div id="comments">
+    <div class="ds-thread" data-thread-key="/algorithm/2015/06/03/Edit_Distance"  data-title="编辑距离(Edit Distance) - Hombo's Blog"></div>
+</div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hombo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+
+
 	<div class="clearboth"></div>
 </div>
-<div class="clearboth"></div>
+
 			</div>
 			<div class="clearboth pagebottom"></div>
 		</div>

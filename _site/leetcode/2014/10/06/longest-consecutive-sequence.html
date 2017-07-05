@@ -4,26 +4,26 @@
 <head>
 	<meta charset="utf-8">
 	
-	<title>Hombo's Blog</title>
+	<title>Longest Consecutive Sequence</title>
     
 	
 	<meta name="author" content="Hombo Wang">
 	
-	<link rel="stylesheet" href="/assets/themes/Snail/css/jquery.fancybox.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/main.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/pages/journal.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/team.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/static.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/errors.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/google-code-prettify/prettify.css">
+	<link rel="stylesheet" href="/assets/themes//css/jquery.fancybox.css">
+	<link rel="stylesheet" href="/assets/themes//css/main.css">
+	<link rel="stylesheet" href="/assets/themes//css/pages/journal.css">
+	<link rel="stylesheet" href="/assets/themes//css/team.css">
+	<link rel="stylesheet" href="/assets/themes//css/static.css">
+	<link rel="stylesheet" href="/assets/themes//css/errors.css">
+	<link rel="stylesheet" href="/assets/themes//google-code-prettify/prettify.css">
 	
-	<link rel="shortcut icon" href="/assets/themes/Snail/img/favicon.ico">
+	<link rel="shortcut icon" href="/assets/themes//img/favicon.ico">
 	
-	<script type="text/javascript" src="/assets/themes/Snail/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/themes//js/jquery.min.js"></script>
 	
-	<script type="text/javascript" src="/assets/themes/Snail/js/auto_loadmore.js"></script>
+	<script type="text/javascript" src="/assets/themes//js/auto_loadmore.js"></script>
 	
-	<script type="text/javascript" src="/assets/themes/Snail/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript" src="/assets/themes//google-code-prettify/prettify.js"></script>
 	
 	<script type="text/javascript">
 	  $(function(){
@@ -166,176 +166,167 @@ countup(2015,10,18)
 </nav>
 			<div id="page-content">
 				
-<div class="page-title-inline">
-	
-	<h1>Hombo's Blog </h1>
-	
-	
-</div>
-<div class="cont932">
-	<hr style="margin-top: 0;">
+<div id="page-content">
+	<div class="cont932">
 	<div id="journal-articles-block">
-	
 		<div class="journal-article">
 			<div class="journal-post-info">
+				<div class="journal-cat-box">
 				
 				
 				<div class="journal-cat-box">
 
-<a href="/categories.html#Algorithm-ref" title="Algorithm">
-	Algorithm
+<a href="/categories.html#leetcode-ref" title="leetcode">
+	leetcode
 
 </a>
 </div>
 				
+				</div>
 			</div>
 			<div class="journal-body">
-				<h1 class="journal-title"><a href="/algorithm/2015/06/03/Edit_Distance">编辑距离(Edit Distance)</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>编辑距离（Edit Distance），又称Levenshtein距离，是指两个字串之间，由一个转成另一个所需的最少编辑操作次数。许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。</p>
+				<h1 class="journal-title">Longest Consecutive Sequence<span class="author">by hombo</span>
+				</h1>
+				<span class="the-article">
+				<p>Given an unsorted array of integers, find the length of the longest consecutive elements sequence. For example,</p>
 
-<p>例如将kitten一字转成sitting：</p>
+<p>Given <code>[100, 4, 200, 1, 3, 2]</code>,</p>
 
-<pre><code>sitten （k→s）
-sittin （e→i）
-sitting （→g）
+<p>The longest consecutive elements sequence is <code>[1, 2, 3, 4]</code>. Return its length: <code>4</code>.</p>
+
+<p>Your algorithm should run in <code>O(n)</code> complexity.</p>
+
+<p>此题可以用hashmap在<code>O(n)</code> 时间复杂度解决。</p>
+
+<!--more-->
+
+<p>一看是无需数组，又要求<code>O(n)</code>复杂度实现，很自然的可以想到用hashmap。</p>
+
+<p>具体方法就是将数组全部hash了，然后在对数组的每个元素进行一边查找，</p>
+
+<p>例如对于数组的第i个数，我们不断判断<code>num[i]+1</code>是否在hash表里，如果在说明数组存在比<code>num[i]</code>大1的数，然后继续判断<code>num[i]+2</code>……直到<code>num[i]+k</code>不再hash表里位置，在这个过程中需要记录长度。</p>
+
+<p>只用上面的算法不能保证是<code>O(n)</code>的，看下面的例子</p>
+
+<pre><code>数组是 `[7,6,5,4,3]`
+
+查找过程是： 
+
+7: `7`
+6: `6,7`
+5: `5,6,7`
+4: `4,5,6,7`
+3: `3,4,5,6,7`
 </code></pre>
 
-<p>俄罗斯科学家Vladimir Levenshtein在1965年提出这个概念。</p>
+<p>显然复杂度最坏未为<code>O(n^2)</code>, 了保证算法是<code>O(n)</code>的，我们要用一些小技巧，让数组中已经被判断过的数不再去判断，其实很简单，就是加一个标示，表示这个数是否在前面的数里面判断过了，我们还可以将每次判断出来的长度存在这次判断最开始的那个数的hashmap中，这样下次如果加到这个数的时候，可以直接用这个长度值，而不需要往后遍历了，例如</p>
 
-<p>那么，给定两个word，如何快速的计算所两者的编辑距离呢？</p>
+<pre><code>5: 5,6,7   把长度3存在hashmap : &lt;5,3&gt;
+4: 4,5,6,7 当4 上加到5的时候，可以从&lt;5,3&gt;直到5后面连续的长度是3，就不用再遍历了。
+</code></pre>
+
+<p>这样就可以保证算法是O(n)的了，空间复杂度是hash表大小。</p>
+
+<p>AC代码如下：</p>
+
+<pre><code>class Solution {
+public:
+    int longestConsecutive(vector&lt;int&gt; &amp;num) {
+        unordered_map&lt;int,int&gt; hash;
+        int max = 0,count,j;
+        unordered_map&lt;int,int&gt;::iterator it;
+        for(int i = 0 ; i &lt; num.size(); ++i) hash.insert({num[i],-1});
+        for(int i = 0 ; i &lt; num.size(); ++i){
+            if(hash.find(num[i])-&gt;second!=-1) continue;
+            count = 1;
+            j = num[i]+1;
+            while((it=hash.find(j++))!=hash.end()){
+                if(it-&gt;second &gt; 0){
+                    count += it-&gt;second;
+                    break;
+                }
+                it-&gt;second = 0;
+                ++count;
+            }
+            hash.find(num[i])-&gt;second = count;
+            if(max &lt; count) max = count;
+        }
+        return max;
+    }
+    
+};
+</code></pre>
+
+<p>另外，还有一种算法是同时从num[i]的两边不断判断，并标记已经判断过的的数，这种方法可以省去一些长度的记录。</p>
 
 
-				
 				</span>
-				<span class="readmore"><a href="/algorithm/2015/06/03/Edit_Distance">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
+				<div class="journal-date">Published 06 October 2014</div>
+				<div class="journal-tags">
 				
 				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/06/02/Permutation">Permutation</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>leetcode上有四道关于排列的题，分别是：Next Permutation， Permutations， Permutations II 和 Permutation Sequence。对于Next Permutation和Permutation Sequence， 都是关于排列的字母序的，基本思想类似。对于Permutations和Permutations II，差别只是在于是否有重复的元素，有重复元素的实现会涉及到组合问题，比较棘手。</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/06/02/Permutation">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/06/01/Spiral-Matrix">Spiral Matrix</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>对矩阵的访问花样很多，例如矩阵分别按行列排好序，然后进行查找；又比如矩阵的旋转，可以旋转90度，旋转180等等。而本题也很有趣，需要按顺时针螺旋的方式访问矩阵，并将1，2，3…..n^2，填入螺旋访问过程中的每个点。</p>
-
-<p>这个问题的关键在于如何实现螺旋遍历？</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/06/01/Spiral-Matrix">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/06/01/Merge-Intervals">Merge Intervals</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>Leetcode 上面有两道关于数轴区间重合和归并的问题：Merge Intervals 和 Insert Interval。两道题大同小异，可以用类似的方法求解。主要问题是如何区分两段区间是否重合，和采用哪种方式进行归并，要求效率要高。</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/06/01/Merge-Intervals">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/05/29/Maximum_Subarray">Maximum Subarray</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.</p>
-
-<p>For example, given the array [−2,1,−3,4,−1,2,1,−5,4],</p>
-
-<p>the contiguous subarray [4,−1,2,1] has the largest sum = 6.</p>
-
-<p>非常经典的一道题–连续字段和。</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/05/29/Maximum_Subarray">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-	</div>
+	 
+		<a class="tag-cont" href="/tags.html#leetcode-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">leetcode</div>
+			<div class="tag-r"></div>
+		</a>
+	 
+		<a class="tag-cont" href="/tags.html#algorithm-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">algorithm</div>
+			<div class="tag-r"></div>
+		</a>
+	 
+		<a class="tag-cont" href="/tags.html#c++-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">c++</div>
+			<div class="tag-r"></div>
+		</a>
+	 
+		<a class="tag-cont" href="/tags.html#hash-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">hash</div>
+			<div class="tag-r"></div>
+		</a>
 	
-	<div id="journal-arrows-cont">
-			<a href="/2" class="journal-arrow ja-forward"></a>
+
+
+
+				</div>
+			</div>
+		</div>
+		<div class="clearboth"></div>
 	</div>
-	
+</div>
 	<div class="clearboth"></div>
-	<div id="journal-loadmore">Load More…</div>
+	
+
+
+  <!-- 多说评论框 start -->
+<div id="comments">
+    <div class="ds-thread" data-thread-key="/leetcode/2014/10/06/longest-consecutive-sequence"  data-title="Longest Consecutive Sequence - Hombo's Blog"></div>
+</div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hombo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+
+
 	<div class="clearboth"></div>
 </div>
-<div class="clearboth"></div>
+
 			</div>
 			<div class="clearboth pagebottom"></div>
 		</div>

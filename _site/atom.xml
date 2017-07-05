@@ -4,7 +4,7 @@
  <title>Hombo's Blog</title>
  <link href="http://hombo.wang/" rel="self"/>
  <link href="http://hombo.wang"/>
- <updated>2015-06-03T22:49:34+08:00</updated>
+ <updated>2017-07-05T18:44:54+08:00</updated>
  <id>http://hombo.wang</id>
  <author>
    <name>Hombo Wang</name>
@@ -1548,6 +1548,48 @@ public:
  </entry>
  
  <entry>
+   <title>无私分享一个翻墙的好方法</title>
+   <link href="http://hombo.wang/hosts/2014/10/06/hosts"/>
+   <updated>2014-10-06T00:00:00+08:00</updated>
+   <id>http://hombo.wang/hosts/2014/10/06/hosts</id>
+   <content type="html">&lt;p&gt;这个翻墙方法是我认为最好的一种，可以随意上facebook，Twitter，Google+等被墙的网站，而且速度非常快，简单易操作。&lt;/p&gt;
+
+&lt;!--more--&gt;
+&lt;p&gt;方法就是：点击此&lt;a href=&quot;http://pan.baidu.com/s/1hqDuVHE&quot;&gt;hosts&lt;/a&gt;文件，然后下载，把下载的hosts文件替换系统的hosts，不同系统更换hosts的方法不同，下面列出不同系统的hosts文件位置。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Mac OS X :&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;/private/etc/hosts&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;最好在shell下用vi来修改，需要用户权限。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Windows XP/Windows 7/Windows 8 :&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;C:\WINDOWS\system32\drivers\etc\hosts&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Linux :&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;/etc/hosts&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;需要用户权限，建议用vi+sudo来修改&lt;/p&gt;
+
+&lt;p&gt;替换了系统的hosts文件后就可以用你的浏览器翻墙了！&lt;/p&gt;
+
+&lt;h3 id=&quot;https&quot;&gt;注意！！上国外的网站时一定要记得在网站前面加&lt;code&gt;https://&lt;/code&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;例如：https://www.facebook.com&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;这个hosts文件我会定期更新，敬请关注！&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>Leetcode Surrounded Regions</title>
    <link href="http://hombo.wang/leetcode/2014/10/06/surrounded-regions"/>
    <updated>2014-10-06T00:00:00+08:00</updated>
@@ -1804,48 +1846,6 @@ public:
  </entry>
  
  <entry>
-   <title>无私分享一个翻墙的好方法</title>
-   <link href="http://hombo.wang/hosts/2014/10/06/hosts"/>
-   <updated>2014-10-06T00:00:00+08:00</updated>
-   <id>http://hombo.wang/hosts/2014/10/06/hosts</id>
-   <content type="html">&lt;p&gt;这个翻墙方法是我认为最好的一种，可以随意上facebook，Twitter，Google+等被墙的网站，而且速度非常快，简单易操作。&lt;/p&gt;
-
-&lt;!--more--&gt;
-&lt;p&gt;方法就是：点击此&lt;a href=&quot;http://pan.baidu.com/s/1hqDuVHE&quot;&gt;hosts&lt;/a&gt;文件，然后下载，把下载的hosts文件替换系统的hosts，不同系统更换hosts的方法不同，下面列出不同系统的hosts文件位置。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Mac OS X : &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code&gt;/private/etc/hosts&lt;/code&gt; &lt;/p&gt;
-
-&lt;p&gt;最好在shell下用vi来修改，需要用户权限。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Windows XP/Windows 7/Windows 8 : &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code&gt;C:\WINDOWS\system32\drivers\etc\hosts&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Linux :&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code&gt;/etc/hosts&lt;/code&gt; &lt;/p&gt;
-
-&lt;p&gt;需要用户权限，建议用vi+sudo来修改&lt;/p&gt;
-
-&lt;p&gt;替换了系统的hosts文件后就可以用你的浏览器翻墙了！&lt;/p&gt;
-
-&lt;h3 id=&quot;https&quot;&gt;注意！！上国外的网站时一定要记得在网站前面加&lt;code&gt;https://&lt;/code&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;code&gt;例如：https://www.facebook.com&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;这个hosts文件我会定期更新，敬请关注！&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
    <title>swap两个int指针指向的数</title>
    <link href="http://hombo.wang/algorithm/2014/10/05/swap-two-int"/>
    <updated>2014-10-05T00:00:00+08:00</updated>
@@ -1883,7 +1883,7 @@ public:
   &lt;li&gt;用乘除法:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;注意，这个方法需要满足 &lt;code&gt;a*b != 0&lt;/code&gt; &lt;/p&gt;
+&lt;p&gt;注意，这个方法需要满足 &lt;code&gt;a*b != 0&lt;/code&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;void swap(int a , int b){
     a = a * b;
@@ -1898,7 +1898,7 @@ public:
   &lt;li&gt;用异或运算：&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;利用异或的性质: &lt;code&gt;交换律&lt;/code&gt; , &lt;code&gt;结合律&lt;/code&gt;  , &lt;code&gt;a ^ a = 0&lt;/code&gt; , &lt;code&gt;0 ^ a = a&lt;/code&gt; &lt;/p&gt;
+&lt;p&gt;利用异或的性质: &lt;code&gt;交换律&lt;/code&gt; , &lt;code&gt;结合律&lt;/code&gt;  , &lt;code&gt;a ^ a = 0&lt;/code&gt; , &lt;code&gt;0 ^ a = a&lt;/code&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;void swap(int a , int b){
     a = a ^ b;

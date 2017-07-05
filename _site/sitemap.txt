@@ -1,17 +1,17 @@
 
-http://hombo.wang/404.html
-http://hombo.wang/about.html
-http://hombo.wang/archive.html
+http://hombo.wang/404
+http://hombo.wang/about
+http://hombo.wang/archive
 http://hombo.wang/atom.xml
-http://hombo.wang/categories.html
-http://hombo.wang/index.html
+http://hombo.wang/categories
+http://hombo.wang/
 http://hombo.wang/rss.xml
-http://hombo.wang/search.html
+http://hombo.wang/search
 http://hombo.wang/sitemap.txt
-http://hombo.wang/tags.html
-http://hombo.wang/2/index.html
-http://hombo.wang/3/index.html
-http://hombo.wang/4/index.html
+http://hombo.wang/tags
+http://hombo.wang/2/
+http://hombo.wang/3/
+http://hombo.wang/4/
 
 http://hombo.wang/algorithm/2015/06/03/Edit_Distance
 http://hombo.wang/leetcode/2015/06/02/Permutation
@@ -27,9 +27,9 @@ http://hombo.wang/android/2014/12/29/appcompat_v7-missing-problem
 http://hombo.wang/android/2014/12/28/TabhostActivity-Enable-onResume
 http://hombo.wang/android/2014/12/26/RoundedNetWorkImageView
 http://hombo.wang/leetcode/2014/10/10/unique-binary-search-tree
+http://hombo.wang/hosts/2014/10/06/hosts
 http://hombo.wang/leetcode/2014/10/06/surrounded-regions
 http://hombo.wang/leetcode/2014/10/06/sum-root-to-leaf-numbers
 http://hombo.wang/leetcode/2014/10/06/longest-consecutive-sequence
-http://hombo.wang/hosts/2014/10/06/hosts
 http://hombo.wang/algorithm/2014/10/05/swap-two-int
 http://hombo.wang/leetcode/2014/10/05/Two-Sum

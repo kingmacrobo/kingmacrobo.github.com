@@ -4,26 +4,26 @@
 <head>
 	<meta charset="utf-8">
 	
-	<title>Hombo's Blog</title>
+	<title>Fix the appcompat_v7 missing problem</title>
     
 	
 	<meta name="author" content="Hombo Wang">
 	
-	<link rel="stylesheet" href="/assets/themes/Snail/css/jquery.fancybox.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/main.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/pages/journal.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/team.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/static.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/css/errors.css">
-	<link rel="stylesheet" href="/assets/themes/Snail/google-code-prettify/prettify.css">
+	<link rel="stylesheet" href="/assets/themes//css/jquery.fancybox.css">
+	<link rel="stylesheet" href="/assets/themes//css/main.css">
+	<link rel="stylesheet" href="/assets/themes//css/pages/journal.css">
+	<link rel="stylesheet" href="/assets/themes//css/team.css">
+	<link rel="stylesheet" href="/assets/themes//css/static.css">
+	<link rel="stylesheet" href="/assets/themes//css/errors.css">
+	<link rel="stylesheet" href="/assets/themes//google-code-prettify/prettify.css">
 	
-	<link rel="shortcut icon" href="/assets/themes/Snail/img/favicon.ico">
+	<link rel="shortcut icon" href="/assets/themes//img/favicon.ico">
 	
-	<script type="text/javascript" src="/assets/themes/Snail/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/themes//js/jquery.min.js"></script>
 	
-	<script type="text/javascript" src="/assets/themes/Snail/js/auto_loadmore.js"></script>
+	<script type="text/javascript" src="/assets/themes//js/auto_loadmore.js"></script>
 	
-	<script type="text/javascript" src="/assets/themes/Snail/google-code-prettify/prettify.js"></script>
+	<script type="text/javascript" src="/assets/themes//google-code-prettify/prettify.js"></script>
 	
 	<script type="text/javascript">
 	  $(function(){
@@ -166,176 +166,100 @@ countup(2015,10,18)
 </nav>
 			<div id="page-content">
 				
-<div class="page-title-inline">
-	
-	<h1>Hombo's Blog </h1>
-	
-	
-</div>
-<div class="cont932">
-	<hr style="margin-top: 0;">
+<div id="page-content">
+	<div class="cont932">
 	<div id="journal-articles-block">
+		<div class="journal-article">
+			<div class="journal-post-info">
+				<div class="journal-cat-box">
+				
+				
+				<div class="journal-cat-box">
+
+<a href="/categories.html#Android-ref" title="Android">
+	Android
+
+</a>
+</div>
+				
+				</div>
+			</div>
+			<div class="journal-body">
+				<h1 class="journal-title">Fix the appcompat_v7 missing problem<span class="author">by hombo</span>
+				</h1>
+				<span class="the-article">
+				<p>在升级了最新版的android ADT后，发现每次建立一个工程都会多出一个appcompat_v7的工程，很是奇怪，今天不小心把这个工程删除了，然后自己的工程就各种报错误，仔细看看错误一般是关于资源的，这是因为一些文件中用到appcompat_v7的一些资源，下面来说明如何更正这些文件，从而摆脱appcompat_v7。</p>
+
+<!--more-->
+
+<h4 id="section">第一步</h4>
+<p>到工程的Properties中的Android项中，把Library中的关于appcompat_v7的引用remove掉。如下图：</p>
+
+<p><img src="http://i.stack.imgur.com/ncXPr.png" alt="" /></p>
+
+<p>然后再将appcompat_v7工程给删除掉，这时你的工程会出现一些R资源未定义的错误，接下来的三步可以纠正这个错误。</p>
+
+<h4 id="section-1">第二步</h4>
+<p>打开你的工程的res/values/styles.xml文件，将其中的<code>AppBaseTheme</code>的<code>parent</code>由<code>Theme.AppCompat.Light</code> 改为<code>@android:style/Theme.Light</code></p>
+
+<h4 id="section-2">第三步</h4>
+<p>打开工程的res/values-v11/styles.xml文件，将其中的<code>AppBaseTheme</code>的<code>parent</code>由<code>Theme.AppCompat.Light</code>改为<code>@android:style/Theme.Holo.Light</code></p>
+
+<h4 id="section-3">第四步</h4>
+<p>打开工程的rest/values-v14/styles.xml文件，将<code>AppBaseTheme</code>的<code>parent</code>由<code>Theme.AppCompat.Light.DarkActionBar</code>改为<code>@android:style/Theme.Holo.Light.DarkActionBar</code></p>
+
+<p>这样，在完成了一起上四个步骤后，就可以删除appcompat_v7了，重新编译自己的工程，应该可以正常运行。</p>
+
+
+				</span>
+				<div class="journal-date">Published 29 December 2014</div>
+				<div class="journal-tags">
+				
+				
+	 
+		<a class="tag-cont" href="/tags.html#android-ref">
+			<div class="tag-l"></div>
+			<div class="tag-c">android</div>
+			<div class="tag-r"></div>
+		</a>
 	
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#Algorithm-ref" title="Algorithm">
-	Algorithm
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/algorithm/2015/06/03/Edit_Distance">编辑距离(Edit Distance)</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>编辑距离（Edit Distance），又称Levenshtein距离，是指两个字串之间，由一个转成另一个所需的最少编辑操作次数。许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。</p>
-
-<p>例如将kitten一字转成sitting：</p>
-
-<pre><code>sitten （k→s）
-sittin （e→i）
-sitting （→g）
-</code></pre>
-
-<p>俄罗斯科学家Vladimir Levenshtein在1965年提出这个概念。</p>
-
-<p>那么，给定两个word，如何快速的计算所两者的编辑距离呢？</p>
 
 
-				
-				</span>
-				<span class="readmore"><a href="/algorithm/2015/06/03/Edit_Distance">Read More</a></span>
+
+				</div>
 			</div>
 		</div>
 		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/06/02/Permutation">Permutation</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>leetcode上有四道关于排列的题，分别是：Next Permutation， Permutations， Permutations II 和 Permutation Sequence。对于Next Permutation和Permutation Sequence， 都是关于排列的字母序的，基本思想类似。对于Permutations和Permutations II，差别只是在于是否有重复的元素，有重复元素的实现会涉及到组合问题，比较棘手。</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/06/02/Permutation">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/06/01/Spiral-Matrix">Spiral Matrix</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>对矩阵的访问花样很多，例如矩阵分别按行列排好序，然后进行查找；又比如矩阵的旋转，可以旋转90度，旋转180等等。而本题也很有趣，需要按顺时针螺旋的方式访问矩阵，并将1，2，3…..n^2，填入螺旋访问过程中的每个点。</p>
-
-<p>这个问题的关键在于如何实现螺旋遍历？</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/06/01/Spiral-Matrix">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/06/01/Merge-Intervals">Merge Intervals</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>Leetcode 上面有两道关于数轴区间重合和归并的问题：Merge Intervals 和 Insert Interval。两道题大同小异，可以用类似的方法求解。主要问题是如何区分两段区间是否重合，和采用哪种方式进行归并，要求效率要高。</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/06/01/Merge-Intervals">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
-		<div class="journal-article">
-			<div class="journal-post-info">
-				
-				
-				<div class="journal-cat-box">
-
-<a href="/categories.html#leetcode-ref" title="leetcode">
-	leetcode
-
-</a>
-</div>
-				
-			</div>
-			<div class="journal-body">
-				<h1 class="journal-title"><a href="/leetcode/2015/05/29/Maximum_Subarray">Maximum Subarray</a><span class="author">by hombo</span></h1>
-				
-				<span class="teaser"><p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.</p>
-
-<p>For example, given the array [−2,1,−3,4,−1,2,1,−5,4],</p>
-
-<p>the contiguous subarray [4,−1,2,1] has the largest sum = 6.</p>
-
-<p>非常经典的一道题–连续字段和。</p>
-
-
-				
-				</span>
-				<span class="readmore"><a href="/leetcode/2015/05/29/Maximum_Subarray">Read More</a></span>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-		
 	</div>
-	
-	<div id="journal-arrows-cont">
-			<a href="/2" class="journal-arrow ja-forward"></a>
-	</div>
-	
+</div>
 	<div class="clearboth"></div>
-	<div id="journal-loadmore">Load More…</div>
+	
+
+
+  <!-- 多说评论框 start -->
+<div id="comments">
+    <div class="ds-thread" data-thread-key="/android/2014/12/29/appcompat_v7-missing-problem"  data-title="Fix the appcompat_v7 missing problem - Hombo's Blog"></div>
+</div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hombo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+
+
 	<div class="clearboth"></div>
 </div>
-<div class="clearboth"></div>
+
 			</div>
 			<div class="clearboth pagebottom"></div>
 		</div>
